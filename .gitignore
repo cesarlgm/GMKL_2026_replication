@@ -2,15 +2,16 @@
 
 *bureaucracy/
 *temporary/
-*additional_processing/
 *2_data_analysis/
-data/output/
 *dataDocumentation/
 !**/documentation/replication/**/
 *tempFiles/
-*raw/
+
 *.csv
 *.dta
+*.xlsx
+*.csv
+*.xls
 
 # files to be named  ending with `temp` are to be ignored
 *temp.*
