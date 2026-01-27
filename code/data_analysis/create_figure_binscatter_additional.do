@@ -1,12 +1,26 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	Garro-Marin, Kahn, and Lang
-	Purpose: 	creates plots for grouped institutions and weighted by number 
-				of movers
-*/
 *===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates binscatter plots of institution fixed effects vs rankings with alternative weighting schemes
+
+*   Input: data/output/final_database_clean_with_dummies.dta
+*          data/output/institution_level_database_clean.dta
+*          data/additional_processing/final_institution_list_medical.dta
+*          data/output/dummy_estimates_file_clean_grouped.dta
+*   Output: results/figures/figure_binscatter_weighted_movers.png
+*           results/figures/figure_binscatter_grouped.png
+*           results/figures/figure_fe_ranking_wmovers_people_counts.xlsx
+*           results/figures/figure_fe_ranking_grouped_people_counts.xlsx
+					
+
+*===============================================================================
+*/
 
 
 cap program drop cr_binscatter_add

@@ -1,50 +1,71 @@
-/*
+﻿/*
 *===============================================================================
-*Project: Do Elite Universities Overpay Their Faculty?
+* Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*			Shulamit Kahn (skahn@bu.edu)
-*			Kevin Lang (lang@bu.edu) 
-*
-*Description: creates tables for ranking imputation analysis, merging institution estimates with IPEDS rankings and generating summary statistics for institutions with missing rankings
-*
-*Input files:
-*	- data/additional_processing/dummy_estimates_file_clean
-*	- data/output/iped_university_rank_cw
-*	- data/output/iped_college_rank_cw
-*	- data/output/clean_ipeds
-*
-*Output files:
-*	- results/tables/table_A3.csv
-*	- results/tables/table_imputed_institutions.csv
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates institution-level database for second-stage regressions by merging AKM estimates with institutional characteristics and rankings
+
+*   Input: data/temporary/dummy_estimates_file_*.dta or data/additional_processing/dummy_estimates_file_*.dta
+*          data/additional_processing/dummy_estimates_file_*_nosen.dta (if source!="temporary")
+*          data/output/iped_university_rank_cw.dta
+*          data/output/iped_college_rank_cw.dta
+*          data/output/clean_ipeds.dta
+*   Output: data/temporary/institution_level_database_*.dta or data/output/institution_level_database_*.dta
+					
+
 *===============================================================================
 */
 
-local source  "additional_processing"
+local source  `1'
 
- 
-foreach database in  clean {
+if "`source'"=="temporary" {
+	local output "temporary"
+}
+else {
+	local output "output"
+}
+
+foreach database in raw   clean {
+	
+	if "`source'"!="temporary" {
+		local keepvars  inst_fe_nosen se_inst_fe_nosen 
+	
+		use "data/`source'/dummy_estimates_file_`database'_nosen", clear
+		
+		keep all_clust se_all_clust instcod
+		
+		rename all_clust inst_fe_nosen
+		rename se_all_clust se_inst_fe_nosen
+		
+		tempfile nosen
+		save `nosen'
+	}
+	
 	use  "data/`source'/dummy_estimates_file_`database'", clear 
 	
-	replace inst_name="univ southern ca san diego" if instcod=="124821"
-	replace inst_name="univ southern ca sacramento" if instcod=="124742"
+	if "`source'"!="temporary" {
+		merge 1:1 instcod using  `nosen', keep(1 3) nogen
+	}
 	
-	replace inst_name="harvard university" if instcod=="166027"
-
+	cap drop _merge
+	XXXX
+	
 	order instcod inst_name, first
 
 	merge 1:1 instcod using "data/output/iped_university_rank_cw", nogen
-
 	merge 1:1 instcod using "data/output/iped_college_rank_cw", nogen
 
 
 	*Now I add the cleaned iped database
 	merge 1:1 instcod using "data/output/clean_ipeds" ,nogen keep(1 2 3)
 	
-	replace inst_name="harvard university" if instcod=="166027"
+	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	
-	****  NOTE TO PEOPLE REPLICATING.  REPLACE ??? WITH THE CODE OF THE BEST RANKED UNIVERSITY
-	drop if missing(all_clust)&instcod!="????"
+	drop if missing(all_clust)&instcod!=????
 
 
 	*FINAL CLEANING OF INSTITUTION VARIABLES
@@ -99,18 +120,7 @@ foreach database in  clean {
 
 
 	*Manual correction to institution rankings
-	replace rank_uni= . 		if inst_name == "indiana university of pennsylvania-main campus"
-	replace institution_type=3 	if inst_name == "indiana university of pennsylvania-main campus"
-	replace rank_uni = 225 		if inst_name== "cuny system office"
-	replace rank_uni = 150 		if inst_name == "indiana university bloomington"
-	replace institution_type=1  if inst_name == "indiana university bloomington"
-	replace rank_uni = 225 		if inst_name== "cuny graduate school and university center"
-	replace institution_type=1  if inst_name== "cuny graduate school and university center"
-	replace rank_uni = 41  		if inst_name=="scripps research institute"
-	replace institution_type=1  if inst_name=="scripps research institute"
-	replace rank_uni = 141		if inst_name=="robert wood johnson univ diagnostic lab"
-	replace institution_type=1  if inst_name=="robert wood johnson univ diagnostic lab"
-
+	XXXX
 
 	*Labelling variables
 	rename se_all_clust se_inst_fe
@@ -206,8 +216,8 @@ foreach database in  clean {
 	restore
 
 	drop if instcod==""
-
-	replace state="ca" if inst_name=="uc merced"
+***************************************************************************************
+	replace state="ca" if inst_name==XXXX 
 
 	*No unranked institution appears in the midwest_colleges rankings
 	merge 1:1 inst_name state using `us_news_rankings'
@@ -222,85 +232,77 @@ foreach database in  clean {
 
 	rename r_endowment_per_student endowment_per_student
 
+	*IMPUTE RANKINGS 
+	do "code/build_database/impute_rankings"
 	
-	*RANKINGS TO USE FOR IMPUTATION
-	local r_type national liberal north south midwest west north_colleges  south_colleges west_colleges midwest_colleges
+	
+	drop if missing(inst_fe)&instcod!=????
+
+	cap drop inst_ranking
+
+	generate 	inst_ranking=0
+	replace 	inst_ranking=rank_uni if new_type==1
+	replace 	inst_ranking=rank_coll if new_type==2
+
+	generate inst_ranking_r= -inst_ranking
 
 
-	replace rank_coll=the_rank if !missing(the_rank)&missing(rank_coll)&institution_type!=1
-	replace institution_type=2 if !missing(rank_coll)&institution_type!=1
+	generate  inst_ranking_p=0
 
+	generate  inst_ranking_p_r=0
 
-	generate rank_uni_w=rank_uni
-	generate rank_coll_w=rank_coll
-	foreach ranking in `r_type' {
-	if "`ranking'"=="national" {
-			local yvar rank_uni
-		}
-		else {
-			local yvar rank_coll
-		}
+	forvalues j=1/2 {
+		xtile temp`j'=inst_ranking if new_type==`j', nq(100)
+		replace inst_ranking_p=temp`j' if new_type==`j'
 		
-		*OLS
-		eststo `ranking': reg `yvar' us_rank if rank_type=="`ranking'"
-		cap drop r_`ranking'
-		predict r_`ranking' if rank_type=="`ranking'"
-		replace `yvar'=r_`ranking' if institution_type==3&!missing(r_`ranking')
-		
-		*WEIGHTED OLS
-		eststo `ranking'_w: reg `yvar' us_rank [aw=us_rank] if rank_type=="`ranking'"
-		cap drop r_`ranking'
-		predict r_`ranking' if rank_type=="`ranking'"
-		replace `yvar'_w=r_`ranking' if institution_type==3&!missing(r_`ranking')
+		replace inst_ranking_p_r=100-inst_ranking_p if new_type==`j'
 	}
+	
+	drop temp*
 
-	*OUTPUTTING REGRESSION TABLES
-	*===============================================================================
-	esttab national liberal north south midwest west north_colleges south_colleges midwest_colleges ///
-		west_colleges using "results/tables/table_A3.csv", label  ///
-		mtitles(National Liberal North South Midwest West North South Midwest West) ///
-		nostar stats(r2 F N) coeflab(us_rank `"US News ranking"') par se(%9.3fc) ///
-		replace
-		
-	cap drop r_*
-	*===============================================================================
+	generate 	l_inst_ranking_p=inst_ranking_p
+	replace 	l_inst_ranking_p=log(inst_ranking_p) if new_type!=3
 
 
-	cap drop new_type
-	cap drop inst_rank
-	generate 	new_type=3
-	replace 	new_type=1 	if institution_type==1|(institution_type==3&!missing(rank_uni))
-	replace		new_type=2 	if institution_type==2|(institution_type==3&!missing(rank_coll))
+	label var inst_ranking "raw ranking pos, 1=best school, linear imputation"
+	label var l_inst_ranking_p "log of rank, 1=best school, linear imputation"
+	label var inst_ranking_r "raw ranking pos, -1=best school, linear imputation"
+	label var l_inst_ranking_p "log of rank, 1=best school, linear imputation"
 
 
-	generate imputed_ranking=institution_type!=new_type
+	*Excluding variables I don´t need
+	keep instcod inst_name inst_fe inst_fe_trim se_inst_fe `keepvars' ///
+		enrollment_grad_m enrollment_ugrad_m enrollment_total_m ///
+		l_enrollment_grad_m l_enrollment_ugrad_m l_enrollment_total_m ///
+		faculty_total_m l_r_endowment years_in_data has_hospital grants_medical ///
+		control hbcu ug_only new_locale l_faculty_total_m l_faculty_per_student ///
+		endowment_per_student l_r_endowment_per_student institution_type state ///
+		new_type imputed_ranking ///
+		inst_ranking inst_ranking_r inst_ranking_p inst_ranking_p_r l_inst_ranking_p ///
+		imputed_ranking
+	drop institution_type
 
-	label define imputed_ranking 0 "Not imputed" 1 "Imputed ranking`'"
-
-	label define new_type 1 "Research university" 2 "Colleges" 3 "No ranking"
-	label values new_type new_type
+	rename new_type institution_type
 
 
+	*Final labelling
+	label var inst_name "Institution name"
+	label var enrollment_grad_m "Graduate enrollment"
+	label var enrollment_ugrad_m "Undergraduate enrollment"
+	label var enrollment_total_m "Total enrollment"
+	label var faculty_total_m 	"Total faculty"
+	label var state "State"
+	label var institution_type "Ranking type"
+	label var inst_ranking "Institution ranking, includes imputations"
+	label var inst_ranking_p "Institution ranking, percentile, 1=best"
+	label var  inst_ranking_p_r "Institution rankin, percentile, 1=worst"
+	label var  imputed_ranking "Indicates wether ranking was imputed"
 
-	*TABLE WITH HOW MANY SCHOOLS WAS I ABLE TO IMPUTE
-	*===============================================================================
-	*Here I output the number of schools I imputing
-	generate rank_type_o=.
-	replace rank_type_o=1 if rank_type=="national"
-	replace rank_type_o=2 if rank_type=="liberal"
-	replace rank_type_o=3 if rank_type=="north"
-	replace rank_type_o=4 if rank_type=="south"
-	replace rank_type_o=5 if rank_type=="west"
-	replace rank_type_o=6 if rank_type=="midwest"
-	replace rank_type_o=7 if rank_type=="north_colleges"
-	replace rank_type_o=8 if rank_type=="south_colleges"
-	replace rank_type_o=9 if rank_type=="west_colleges"
-	replace rank_type_o=10 if rank_type=="midwest_colleges"
+	order instcod inst_name inst_fe* institution_type imputed_ranking inst_ranking ///
+		inst_ranking_r inst_ranking_p inst_ranking_p_r l_inst_ranking_p enrollment_grad_m enrollment_ugrad_m  ///
+		enrollment_total_m faculty_total_m l_enrollment_grad_m l_enrollment_ugrad_m ///
+		l_enrollment_total_m l_r_endowment l_enrollment_grad_m l_enrollment_ugrad_m ///
+		l_enrollment_total_m l_r_endowment, first
 
-	labmask rank_type_o, values(rank_type)
-
-	estpost tabulate rank_type_o if  !missing(us_rank)&missing(the_rank)&!missing(inst_fe)
-
-	esttab . using "results/tables/table_imputed_institutions.csv", ///
-		cells("b(f(0)) pct(f(2))") replace
+	save "data/`output'/institution_level_database_`database'", replace	
 }

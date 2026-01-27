@@ -1,13 +1,26 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	Garro-Marin, Kahn, Lang
-
-	Description:  creates table using job statisfaction
-*/
 *===============================================================================
-
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (garromar@bu.edu)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates LaTeX tables analyzing the relationship between institution rankings and faculty job satisfaction using both two-step and one-step AKM estimates
+*
+*Input files:
+*	- results/regressions/regression_satisfaction_ts[1-3][sat_vsat/sat_sat][_nosen]
+*	- results/regressions/regression_satisfaction_os[1-3][sat_vsat/sat_sat][_nosen]
+*
+*Output files:
+*	- results/tables/table_jobsat_rankings_sat_vsat.tex (very satisfied)
+*	- results/tables/table_jobsat_rankings_sat_sat.tex (satisfied)
+*	- results/tables/table_jobsat_rankings_sat_vsat_nosen.tex
+*	- results/tables/table_jobsat_rankings_sat_sat_nosen.tex
+*	- results/tables/table_jobsat_rankings_sat_vsat_mixed.tex
+*	- results/tables/table_jobsat_rankings_sat_sat_mixed.tex
+*===============================================================================
+*/
 
 
 cap program drop create_tjobsat

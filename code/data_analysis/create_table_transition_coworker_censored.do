@@ -1,11 +1,22 @@
-*===============================================================================
-*Project AKM-SDR
-*=============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	creates transition matrix based on coworker's salaries
-*/
 *===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates transition matrices based on coworker average salaries, analyzing faculty mobility patterns across institutions with different peer salary levels
+*
+*Input files:
+*	- data/output/institution_level_database_clean
+*	- data/additional_processing/final_institution_list_medical
+*	- data/output/final_database_clean_with_dummies.dta
+*
+*Output files:
+*	- results/tables/transitions_table_*_coworker.tex
+*===============================================================================
+*/
 
 
 cap program drop cr_transit_coworker

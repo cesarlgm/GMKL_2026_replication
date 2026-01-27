@@ -1,12 +1,24 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	Garro-Marín, Kahn, and Lang
-				
-	Outputs:    creates figures summarizing direction of the moves
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates figures summarizing mobility patterns and salary changes around job moves
+
+*   Input: data/output/final_database_*_with_dummies.dta
+*          data/output/institution_level_database_*.dta
+*   Output: results/figures/figure_hist_l_change_ranking_within*.png
+*           results/figures/figure_binscat_d_salary_vs_d_rankings*.png
+*           results/figures/figure_hist_l_change_ranking_within*_count.csv
+*           results/figures/figure_binscat_d_salary_vs_d_rankings*_count.csv
+					
+
+*===============================================================================
 */
-*==============================================================================
 
 
 
@@ -202,8 +214,3 @@ create_mobility_graphs
 
 
 
-
-/*
-/*
-	
-	}

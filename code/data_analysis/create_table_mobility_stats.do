@@ -1,13 +1,27 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	Garro-Marín, Kahn, and Lang
-				
-	Outputs:    creates summary stats depending on the type of the move
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (garromar@bu.edu)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+* Description: creates comprehensive summary statistics and LaTeX tables for 
+* faculty mobility patterns between institutions, including transition matrices 
+* by ranking terciles, wage change analysis, and Sankey flow charts
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean
+*
+*Output files:
+*	- results/tables/transition_people_terciles.tex
+*	- results/tables/transition_count_terciles.tex  
+*	- results/tables/transition_wages_terciles.tex
+*	- results/tables/table_transition_summary.tex
+*	- results/tables/table_edge_summary.tex
+*	- results/tables/table_inflow_outflow_summary.tex
+*===============================================================================
 */
-*==============================================================================
-
 
 
 *This program reshapes the dataset into transtions

@@ -1,12 +1,25 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	Garro-Marin, Kahn, and Lang
-				
-	Description: creates tables of FE variances 
-*/
 *===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates tables of variance decomposition for AKM fixed effects, analyzing the share of wage variance explained by individual and institution components
+*
+*Input files:
+*	- data/output/final_database_*_with_dummies.dta
+*	- data/temporary/file_for_R_regression_collapsed_*.csv
+*	- results/tables/corr_net_field_uncollapsed.csv
+*	- results/tables/corr_net_field_collapsed.csv
+*	- results/tables/*corrected_variances_*.csv
+*	- results/tables/collapsed_*corrected_variances_*.csv
+*
+*Output files:
+*	- results/tables/table_variance_decomp_*.tex
+*===============================================================================
+*/
 
 cap program drop cr_variance_decomp
 program define cr_variance_decomp

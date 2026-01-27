@@ -1,11 +1,21 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	Garro-Marin, Kahn and Lang
-	Purpose: 	creates table relating premiums/salary to endowments
-*/
 *===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates LaTeX tables analyzing the relationship between institution premiums and endowments using both two-step and one-step AKM estimates
+*
+*Input files:
+*	- results/regressions/institution_fe_*_clean[_nosen]
+*	- results/regressions/one_step_endowment_[1-3]_*[_nosen]
+*
+*Output files:
+*	- results/tables/table_premiums_endowment_*[_nosen/_mixed].tex
+*===============================================================================
+*/
 
 
 cap program drop label_regvars

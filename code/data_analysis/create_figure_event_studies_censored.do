@@ -1,7 +1,26 @@
+/*
 *===============================================================================
-*CREATE EVENT STUDY
-*SCHOOL RANK
-*==============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates event study figures showing wage patterns around job moves by institution prestige and coworker salary
+
+*   Input: data/output/institution_level_database_*.dta
+*          data/output/final_database_*_with_dummies.dta
+*          data/additional_processing/final_institution_list_medical.dta
+*   Output: results/figures/figure_event_prestige_panel_A_universities.pdf
+*           results/figures/figure_event_prestige_panel_B_colleges.pdf
+*           results/figures/figure_event_coworker.pdf
+*           results/figures/figure_event_prestige_people_counts.xlsx
+*           results/figures/figure_event_coworker_people_counts.xlsx
+					
+
+*===============================================================================
+*/
 
 
 

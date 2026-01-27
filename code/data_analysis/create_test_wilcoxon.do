@@ -1,4 +1,23 @@
 
+/*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: performs Wilcoxon signed-rank tests on faculty mobility patterns, testing symmetry in institutional ranking changes for faculty job transitions
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean
+*
+*Output files:
+*	- (Statistical test results displayed in console)
+*===============================================================================
+*/
+
 cap program drop create_wilcoxon_data
 program define create_wilcoxon_data
 	local d_type clean

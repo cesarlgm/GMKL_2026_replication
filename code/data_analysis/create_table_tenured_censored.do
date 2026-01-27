@@ -1,11 +1,23 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	outputs second stage regressions
-*/
 *===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates tables analyzing pay premiums and rankings specifically for tenured faculty, comparing results with all faculty
+*
+*Input files:
+*	- data/output/institution_level_database_*
+*	- data/additional_processing/final_institution_list_medical
+*	- data/output/tenured_only_estimates_*[_nosen]
+*
+*Output files:
+*	- results/tables/table_tenured_*[_nosen].tex
+*	- results/tables/table_tenured.csv
+*===============================================================================
+*/
 
 
 cap program drop create_tab_tenured

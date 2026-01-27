@@ -1,15 +1,21 @@
-*Create table 3
-
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	Garro-Maín, Kahn and Lang
-	Purpose: 	creates main results table
-	
-	Latest mods: creates table with main regressions of premiums/salary on rankings
-*/
 *===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates main results tables analyzing the relationship between institution premiums/salary and university rankings using both two-step and one-step AKM estimates
+*
+*Input files:
+*	- results/regressions/institution_fe_[1-6]_*[_nosen]
+*	- results/regressions/one_step_[1-3]_*[_nosen]
+*
+*Output files:
+*	- results/tables/table_premiums_rankings_*[_nosen/_mixed].tex
+*===============================================================================
+*/
 
 *This program just relabels the variables for the regressions
 cap program drop label_regvars

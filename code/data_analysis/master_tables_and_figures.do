@@ -1,11 +1,20 @@
-*===============================================================================
-*Project AKM-SDR
-*=============================================================================
 /*
-	Author: 	Garro-Marin, Kahn, Lang
-	Purpose: 	master do file for database construction
-*/
 *===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: master do file for creating all tables and figures in the paper, orchestrating the complete data analysis pipeline from summary statistics to final results
+*
+*Input files:
+*	- (Various files through called programs - see individual programs for details)
+*
+*Output files:
+*	- (All tables and figures - see individual programs for complete list)
+*===============================================================================
+*/
 
 *Table: Summary stats table (raw/clean)
 do "code/data_analysis/create_table_summary_stats.do"

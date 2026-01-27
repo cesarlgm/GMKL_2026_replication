@@ -1,4 +1,25 @@
 
+/*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (garromar@bu.edu)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates one-step AKM estimates comparing current versus origin institution effects, controlling for both current and previous institution characteristics to analyze faculty mobility patterns
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean
+*
+*Output files:
+*	- results/tables/table_p_vineay_results.tex
+*	- results/tables/table_p_vineay_results.csv
+*===============================================================================
+*/
+
+
 capture program drop clean_origin_database
 program define clean_origin_database 
 	*First I drop people with missing time in current job

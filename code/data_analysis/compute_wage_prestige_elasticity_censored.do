@@ -1,11 +1,22 @@
-*===============================================================================
-*Project AKM-SDR
-*=============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	computes elasticity of wages to rankings
-*/
 *===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	computes elasticity of wages to institutional rankings
+
+*   Input: data/output/final_database_clean_with_dummies.dta
+*          data/output/institution_level_database_clean.dta
+*          data/additional_processing/final_institution_list_medical.dta
+*   Output: Regression results (displayed)
+					
+
+*===============================================================================
+*/
 
 
 use "data/output/final_database_clean_with_dummies.dta", clear 

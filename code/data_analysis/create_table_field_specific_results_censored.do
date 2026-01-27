@@ -1,13 +1,30 @@
-*===============================================================================
-*Project AKM-SDR
-*=============================================================================
 /*
-	Author: 	Garro-Marín, Kahn, Lang
-	Purpose: 	creates tables with field specific results
-*/
 *===============================================================================
-
-
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (garromar@bu.edu)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates comprehensive tables and figures with field-specific results 
+*for biological sciences and engineering PhDs, including AKM estimations by field, institution rankings analysis, and binscatter plots
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean
+*	- data/additional_processing/indiv_fe_estimates_clean.dta
+*	- data/temporary/USNWR_bio_rankings_clean
+*	- data/temporary/USNWR_eng_rankings_clean
+*
+*Output files:
+*	- results/regressions/field_clean (and field_clean_nosen)
+*	- results/tables/table_field_specific_results_bio.tex/csv
+*	- results/tables/table_field_specific_results_eng.tex/csv  
+*	- results/tables/table_field_specific_results_condensed.tex
+*	- results/figures/binscatter_uw_field_*.png
+*	- results/tables/table_field_summstats.tex
+*===============================================================================
+*/
 
 
 *This program creates the files to run the field-specific results

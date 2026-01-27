@@ -1,13 +1,25 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	Garro-Marin, Kahn, and Lang
-				
-	Description: creates main table of summary statistics
-	latest mods: condensed all panels to output them in only one table
-*/
 *===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates comprehensive summary statistics tables for individual-level and institution-level variables, generating multiple panels for the main descriptive statistics table
+*
+*Input files:
+*	- data/output/final_database_*_with_dummies.dta
+*	- data/output/institution_level_database_*
+*
+*Output files:
+*	- results/tables/table_summary_stats_*.tex
+*	- results/tables/table_1_panel_A.tex
+*	- results/tables/table_1_panel_B.tex
+*	- results/tables/table_1_panel_C.tex
+*	- results/tables/table_1_panel_D.tex
+*===============================================================================
+*/
 
 
 

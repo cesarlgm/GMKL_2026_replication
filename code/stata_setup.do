@@ -1,18 +1,22 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
+
 /*
-	Author: 	César Garro-Maín
-	Description: 	install required ados for replication package
-*/
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
 *===============================================================================
 
-*This has to be run at least once before the master_do_file.do is run
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	loads programs required for setting up stata
+					
+
+*===============================================================================
+*/
 
 
 *This packages are the ones available at the NORC server. They are not the latest
 *versions available at ssc
-global texspace \hspace{3mm}
 
 cap program drop install_stata_dep
 program define install_stata_dep
@@ -119,4 +123,27 @@ program define clean_folders
 		cap mkdir "results/text"
 		cap mkdir "results/log_files"
 	}
+end 
+
+cap program drop set_global_vars
+program define set_global_vars
+	global texspace="\hspace{3mm}"
+
+	*location of Survey of Doctorate Recipients (SDR files)
+	global stem 	"data/raw"
+	global sdr93	"${stem}/esdr93.dta"
+	global sdr95	"${stem}/esdr95.dta"
+	global sdr97	"${stem}/esdr97.dta"
+	global sdr99	"${stem}/esdr99.dta"
+	global sdr01	"${stem}/esdr01.dta"
+	global sdr03	"${stem}/esdr03.dta"
+	global sdr06	"${stem}/esdr06.dta"
+	global sdr08	"${stem}/esdr08.dta"
+	global sdr10	"${stem}/esdr10.dta"
+	global sdr13	"${stem}/esdr13.dta"
+	global sdr15	"${stem}/esdr15.dta"
+	global sdr17	"${stem}/esdr17.dta"
+	global sdr19 	"${stem}/esdr19.dta"
+
+	set scheme s1color, permanently
 end 

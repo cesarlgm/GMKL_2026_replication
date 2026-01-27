@@ -1,20 +1,21 @@
 /*
 *===============================================================================
-*Project: Do Elite Universities Overpay Their Faculty?
+* Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*			Shulamit Kahn (skahn@bu.edu)
-*			Kevin Lang (lang@bu.edu) 
-*
-*Description: creates LaTeX table comparing one-step AKM regression results with and without individual fixed effects, including time-varying specifications
-*
-*Input files:
-*	- results/regressions/one_step_[1-3]_clean
-*	- results/regressions/one_step_nofe_[1-3]_clean
-*
-*Output files:
-*	- results/tables/table_one_step_time_varying.tex
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates LaTeX table showing effects of time-varying variables in one-step AKM estimates
+
+*   Input: results/regressions/one_step_*_clean.ster
+*          results/regressions/one_step_nofe_*_clean.ster
+*   Output: results/tables/table_one_step_time_varying.tex
+					
+
 *===============================================================================
+*/
 */
 
 global texspace \hspace{3mm}

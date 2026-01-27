@@ -1,11 +1,22 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	creates AKM regression table
-*/
 *===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates LaTeX table showing first-stage AKM regression results with time-varying covariates
+
+*   Input: results/regressions/all_clust_raw*.ster
+*          results/regressions/all_clust_clean*.ster
+*   Output: results/tables/table_AKM_first_stage*.tex
+					
+
+*===============================================================================
+*/
+
 global texspace \hspace{3mm}
 
 cap program drop create_AKM_table

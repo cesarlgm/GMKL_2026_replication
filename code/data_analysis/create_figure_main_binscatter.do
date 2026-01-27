@@ -1,11 +1,25 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	creates binscatter plots for the paper
-*/
 *===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates main binscatter plots showing relationship between institution fixed effects/average salaries and rankings
+
+*   Input: data/output/final_database_clean_with_dummies.dta
+*          data/output/institution_level_database_clean.dta
+*          data/additional_processing/final_institution_list_medical.dta
+*   Output: results/figures/figure_fe_ranking*.png
+*           results/figures/figure_salary_ranking.png
+*           results/figures/figure_fe_ranking_people_counts*.xlsx
+*           results/figures/figure_salary_ranking_people_counts.xlsx
+					
+
+*===============================================================================
+*/
 
 
 
