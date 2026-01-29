@@ -1,4 +1,14 @@
-
+#===============================================================================
+# Do Elite Universities Overpay Their Faculty?
+#===============================================================================
+#
+#	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+#				Shulamit Kahn (skahn@bu.edu)
+#				Kevin Lang (lang@bu.edu)
+#
+#	Description: 	installs R packages required for replication
+#
+#===============================================================================
 
 args <- commandArgs(trailingOnly = TRUE)
   

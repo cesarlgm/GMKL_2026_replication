@@ -1,5 +1,5 @@
-# Data folder structure
+# Data Folder
 
-- data/raw/ contains all the raw files required to replicate the dataset.
-- data/additional_processing/ contains intermediate files produced during the execution.
-- data/output/ contains all final files used for creating the tables.
+- `raw/` contains all the input datasets required for the replacation.
+- `output/` saves all the datasets used to create folders and figures.
+- `additional_processing/` and `temporary/` contain intermediate files saved during the execution.

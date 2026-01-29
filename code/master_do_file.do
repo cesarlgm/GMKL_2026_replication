@@ -28,6 +28,9 @@ version 17
 cd	"K:\Research\Kahn_BU\AKM_SDR"
 global R_library "\\\\de4.norc.org/NCSES/Home/marin-cesar/Documents/R/win-library/4.1"
 
+
+global run_kss "yes"		//"yes" or "no" - whether to run the KSS corrections or not
+
 //# Before executing also modify the paths in the file code/R_setup.R
 
 *===============================================================================
@@ -76,9 +79,10 @@ rscript using "code/install_R_packages.R", ///
 do "code/build_database/master_build.do"  
 
 
-*This bit of code takes approximately 5 days
-do "code/build_database/correct_KSS_master.do"
-
+if "$run_kss"=="yes" {
+	*This bit of code takes approximately 5 days
+	do "code/build_database/correct_KSS_master.do"
+}
 
 *Creates all the tables and figures
 do "code/data_analysis/master_tables_and_figures.do"
