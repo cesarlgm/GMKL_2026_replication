@@ -1,7 +1,7 @@
 # List of files required for replication
 
 
-## Sorce files
+## Source files
 - `esdr95.dta`
 - `esdr97.dta`
 - `esdr99.dta`

@@ -3,7 +3,7 @@
 - All figures are contained in `results/figures`.
 - All tables are contained in `results/tables`.
 
-## Correspondence Between Output Files and Tables and Figures in the Paper
+## Correspondence Between Output Files and Exhibits in the Paper
 
 
 | Exhibit | Panel (if applicable) | Output files |
