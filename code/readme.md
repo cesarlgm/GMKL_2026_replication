@@ -6,7 +6,10 @@
 - Programs in `code/data_analysis` create all tables and figures in the paper.
   `code/data_analysis/master_tables_and_figures.do` calls all the required sub-programs.
 
-## Correspondence Between Tables/Figures and Programs
+## Correspondence Between Exhibits and Programs
+
+All the programs below are contained in `code/data_analysis`.
+
 
 | Exhibit | Panel (if applicable) | Program |
 | --- | --- | --- |

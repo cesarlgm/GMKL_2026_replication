@@ -5,7 +5,7 @@
 
 ## Correspondence Between Output Files and Tables and Figures in the Paper
 
----
+
 | Exhibit | Panel (if applicable) | Output files |
 | --- | --- | --- |
 | Main Figure: Figure 1 | A | `figure_salary_ranking.png` |
@@ -43,4 +43,4 @@
 | Appendix Table: Table B15 |  | `transitions_table_salary_coworker.tex` |
 | Appendix Table: Table B16 |  | `transitions_table_probability_coworker.tex` |
 | Appendix Table: Table A2 |  | `table_ranking_imputation.tex` |
----
+
