@@ -1,7 +1,7 @@
 
 # Replication Package for Do Elite Universities Overpay their Faculty? (Garro-Marin, Kahn, and Lang, 2026)
 
-## Quick Readme
+## Quick Readme Guide
 
 ### Package Overview
 This public replication package contains the majority of the code required for replicating
