@@ -48,3 +48,21 @@ All the programs below are contained in `code/data_analysis`.
 | Appendix Table: Table B15 |  | `create_table_transition_coworker.do` |
 | Appendix Table: Table B16 |  | `create_table_transition_coworker.do` |
 | Appendix Table: Table A2 |  | `create_table_ranking_imputation.do` |
+
+
+## List of Undisclosed Programs
+
+The following programs in the table below are not included in the public-use version of this
+replication package. They can be provided to the users with an SDR data license.
+
+| File Name | Location | Description |
+|-----------|----------|-------------|
+| drop_special_instcods.do | code/build_database/ | Drops observations for specific institutions from the sample |
+| fix_college_ranking_names.do | code/build_database/ | Edits institution names in the THE and USNWR rankings |
+| fix_ranking_database_names.do | code/build_database/ | Edits institution names in SDR database |
+| fix_ranking_fe_names.do | code/build_database/ | Edits labels to estimated fixed effects |
+| fix_university_ranking_names.do | code/build_database/ | Edits institution names in the THE and USNWR rankings |
+| global_instcod_merge.do | code/build_database/ | Merges institution codes together |
+| institution_code_corrections.do | code/build_database/ | Manual correction of institution coding mistakes |
+| remaining_filters.do | code/build_database/ | Applies sample filter to the database |
+| update_inst_labels.do | code/build_database/ | Updates institution names after merges |
