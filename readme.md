@@ -1,5 +1,7 @@
 
 # Replication Package for Do Elite Universities Overpay their Faculty? (Garro-Marin, Kahn, and Lang, 2026)
+![Last Updated](https://img.shields.io/github/last-commit/cesarlgm/GMKL_2026_replication)
+![Last Release](https://img.shields.io/github/release-date/cesarlgm/GMKL_2026_replication)
 
 ## Quick Readme Guide
 
