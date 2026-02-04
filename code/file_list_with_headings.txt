@@ -1,0 +1,965 @@
+File: stata_setup.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	loads programs required for setting up stata
+					
+
+*===============================================================================
+*/
+========================================
+
+File: R_setup.R
+Heading: #===============================================================================
+# Do Elite Universities Overpay Their Faculty?
+#===============================================================================
+#
+#	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+#				Shulamit Kahn (skahn@bu.edu)
+#				Kevin Lang (lang@bu.edu)
+#
+#	Description: 	loads programs required for setting up R
+#
+#===============================================================================
+========================================
+
+File: master_do_file.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	this do file replicates the paper
+					
+
+*===============================================================================
+*/
+========================================
+
+File: install_R_packages.R
+Heading: #===============================================================================
+# Do Elite Universities Overpay Their Faculty?
+#===============================================================================
+#
+#	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+#				Shulamit Kahn (skahn@bu.edu)
+#				Kevin Lang (lang@bu.edu)
+#
+#	Description: 	installs R packages required for replication
+#
+#===============================================================================
+========================================
+
+File: build_database/add_iped_codes.do
+Heading: *===============================================================================
+*Project AKM-SDR
+*===============================================================================
+/*
+	Author: 	César Garro-Maín
+	Purpose:	converts osep to iped + adds institution labels
+*/
+*==============================================================================
+========================================
+
+File: build_database/add_institution_dummies.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates institution dummy variables for AKM estimation with Harvard as reference
+
+*   Input: data/output/individual_database_raw.dta
+*          data/output/individual_database_clean.dta
+*          data/additional_processing/estimation_sample_*_key.dta (if database_type=="final")
+*   Output: data/temporary/final_database_*_with_dummies.dta (if database_type=="temporary")
+*           data/output/final_database_*_with_dummies.dta (if database_type=="final")
+*           data/temporary/institution_dummy_crosswalk_*.dta or data/additional_processing/institution_dummy_crosswalk_*.dta
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_panel_variables.do
+Heading: *===============================================================================
+*Project AKM-SDR
+*===============================================================================
+/*
+	Author: 	César Garro-Maín
+	Purpose: 	creates some panel level variables
+*/
+*===============================================================================
+========================================
+
+File: build_database/create_regression_database.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates institution-level database for second-stage regressions by merging AKM estimates with institutional characteristics and rankings
+
+*   Input: data/temporary/dummy_estimates_file_*.dta or data/additional_processing/dummy_estimates_file_*.dta
+*          data/additional_processing/dummy_estimates_file_*_nosen.dta (if source!="temporary")
+*          data/output/iped_university_rank_cw.dta
+*          data/output/iped_college_rank_cw.dta
+*          data/output/clean_ipeds.dta
+*   Output: data/temporary/institution_level_database_*.dta or data/output/institution_level_database_*.dta
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/depurate_dates_missing_ipeds.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	cleans institution codes and start dates by replacing missing/unknown IPEDS codes and fixing inconsistent dates
+
+*   Input: data/temporary/file_with_sample_restrictions.dta
+*          data/raw/inst_labels.dta
+*   Output: data/temporary/file_cleaned_dates.dta
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_work_variables.do
+Heading: *===============================================================================
+*Project AKM-SDR
+*===============================================================================
+/*
+	Author: 	César Garro-Maín
+	Purpose: 	creates work related variables
+*/
+========================================
+
+File: build_database/create_work_history_input.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	restricts the sample we use for the work history
+
+*   Input: data/temporary/cleaned_final_database.dta
+*   Output: data/temporary/file_with_sample_restrictions.dta
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_tenured_only_estimates.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates AKM estimates restricted to tenured faculty only
+
+*   Input: data/output/final_database_*_with_dummies.dta
+*   Output: data/output/final_database_clean_tenured_only*.dta
+*           data/output/tenured_only_estimates_*.dta
+*           results/regressions/AKM_faculty_only*.ster
+*           data/temporary/tenured_only_R_*.csv (for R connectedness analysis)
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_one_step_estimates.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates one-step estimates that directly regress wages on rankings and institutional characteristics with individual fixed effects
+
+*   Input: data/output/final_database_*_with_dummies.dta
+*          data/output/institution_level_database_*.dta
+*   Output: results/regressions/one_step_*_*.ster
+*           results/regressions/one_step_nofe_*_*.ster
+*           results/regressions/one_step_endowment_*_*.ster
+*           results/regressions/one_step_twc_endowment_*_*.ster
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_job_satisfaction_estimates.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	estimates institution fixed effects using job satisfaction as dependent variable and creates second-stage regressions
+
+*   Input: data/output/final_database_clean_with_dummies.dta
+*          data/output/institution_level_database_clean.dta
+*          SDR job satisfaction data (extracted from multiple survey years)
+*   Output: data/temporary/job_satisfaction.dta
+*           data/temporary/estimates_jobsat_fe_*.dta
+*           results/regressions/regression_satisfaction_ts*.ster
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_iped_ranking_cw_censored.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates crosswalk between IPEDS codes and THE rankings (university and college)
+
+*   Input: data/output/individual_database_raw.dta
+*          data/temporary/file_with_sample_restrictions.dta
+*          data/additional_processing/university_rankings.dta
+*          data/additional_processing/college_rankings.dta
+*   Output: data/output/iped_university_rank_cw.dta
+*           data/output/iped_college_rank_cw.dta
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_institution_estimates.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	estimates AKM institution fixed effects and individual pay premiums
+
+*   Input: data/temporary/final_database_*_with_dummies.dta (if source=="temporary")
+*          data/output/final_database_*_with_dummies.dta (if source=="final")
+*          data/temporary/institution_dummy_crosswalk_*.dta or data/additional_processing/institution_dummy_crosswalk_*.dta
+*   Output: data/temporary/dummy_estimates_file_*.dta or data/additional_processing/dummy_estimates_file_*.dta
+*           data/temporary/indiv_fe_estimates_*.dta or data/additional_processing/indiv_fe_estimates_*.dta
+*           results/regressions/*_*.ster (regression estimates)
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_individual_databases.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates final individual-level databases with cleaned wages and demographic variables
+
+*   Input: data loaded in memory from previous pipeline steps
+*   Output: data/output/individual_database_`database_type'.dta
+*           data/output/final_institution_list.dta (when database_type=="raw")
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_grouped_estimates.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates AKM estimates by grouping institutions with similar rankings to ensure at least 5 movers per group
+
+*   Input: data/output/final_database_clean_with_dummies.dta
+*          data/output/institution_level_database_clean.dta
+*   Output: data/output/dummy_estimates_file_*_grouped*.dta
+*           data/output/indiv_fe_estimates_*_grouped*.dta
+*           results/regressions/*_*_grouped*.ster
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/create_demographics.do
+Heading: *===============================================================================
+*Project AKM-SDR
+*===============================================================================
+/*
+	Author: 	César Garro-Maín
+	Purpose: 	cleans and creates demographic variables
+*/
+*===============================================================================
+========================================
+
+File: build_database/correct_KSS_master.do
+Heading: *===============================================================================
+*Project AKM-SDR
+*===============================================================================
+/*
+	Author: 	Garro-Marín, Kahn, and Lang
+				
+	Outputs:    computes KSS correction
+*/
+*==============================================================================
+========================================
+
+File: build_database/clean_switchers.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	restricts the sample we use for the work history
+
+*   Input: data/temporary/file_with_sample_restrictions.dta
+*   Output: data/temporary/switcher_file_fixed.dta
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/clean_non_switchers.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	cleans the database of people who did not switch institutions
+
+*   Input: data/temporary/non_switcher_file.dta
+*          data/temporary/non_switcher_file_part2.dta
+*   Output: data/temporary/non_switcher_file_fixed.dta
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/clean_ipeds.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	cleans and processes IPEDS institutional characteristics data
+
+*   Input: data/raw/IPEDS_v2.dta
+*   Output: data/output/clean_ipeds.dta
+					
+
+*===============================================================================
+*/
+========================================
+
+File: build_database/clean_field_rankings.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	cleans and processes field-specific rankings from US News & World Report (biology and engineering)
+
+*   Input: data/raw/USNWR_bio_rankings_processed.dta
+*          data/raw/USNWR_eng_rankings_processed.dta
+*          data/output/institution_level_database_raw.dta
+*   Output: data/temporary/USNWR_bio_rankings_clean.dta
+*           data/temporary/USNWR_eng_rankings_clean.dta
+					
+
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/compute_wage_prestige_elasticity_censored.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	computes elasticity of wages to institutional rankings
+
+*   Input: data/output/final_database_clean_with_dummies.dta
+*          data/output/institution_level_database_clean.dta
+*          data/additional_processing/final_institution_list_medical.dta
+*   Output: Regression results (displayed)
+					
+
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_figure_main_binscatter.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates main binscatter plots showing relationship between institution fixed effects/average salaries and rankings
+
+*   Input: data/output/final_database_clean_with_dummies.dta
+*          data/output/institution_level_database_clean.dta
+*          data/additional_processing/final_institution_list_medical.dta
+*   Output: results/figures/figure_fe_ranking*.png
+*           results/figures/figure_salary_ranking.png
+*           results/figures/figure_fe_ranking_people_counts*.xlsx
+*           results/figures/figure_salary_ranking_people_counts.xlsx
+					
+
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_field_specific_results_censored.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (garromar@bu.edu)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates comprehensive tables and figures with field-specific results 
+*for biological sciences and engineering PhDs, including AKM estimations by field, institution rankings analysis, and binscatter plots
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean
+*	- data/additional_processing/indiv_fe_estimates_clean.dta
+*	- data/temporary/USNWR_bio_rankings_clean
+*	- data/temporary/USNWR_eng_rankings_clean
+*
+*Output files:
+*	- results/regressions/field_clean (and field_clean_nosen)
+*	- results/tables/table_field_specific_results_bio.tex/csv
+*	- results/tables/table_field_specific_results_eng.tex/csv  
+*	- results/tables/table_field_specific_results_condensed.tex
+*	- results/figures/binscatter_uw_field_*.png
+*	- results/tables/table_field_summstats.tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_mobility_stats.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (garromar@bu.edu)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+* Description: creates comprehensive summary statistics and LaTeX tables for 
+* faculty mobility patterns between institutions, including transition matrices 
+* by ranking terciles, wage change analysis, and Sankey flow charts
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean
+*
+*Output files:
+*	- results/tables/transition_people_terciles.tex
+*	- results/tables/transition_count_terciles.tex  
+*	- results/tables/transition_wages_terciles.tex
+*	- results/tables/table_transition_summary.tex
+*	- results/tables/table_edge_summary.tex
+*	- results/tables/table_inflow_outflow_summary.tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_one_step_time_varying.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates LaTeX table comparing one-step AKM regression results with and without individual fixed effects, including time-varying specifications
+*
+*Input files:
+*	- results/regressions/one_step_[1-3]_clean
+*	- results/regressions/one_step_nofe_[1-3]_clean
+*
+*Output files:
+*	- results/tables/table_one_step_time_varying.tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_premiums_rankings_censored.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates main results tables analyzing the relationship between institution premiums/salary and university rankings using both two-step and one-step AKM estimates
+*
+*Input files:
+*	- results/regressions/institution_fe_[1-6]_*[_nosen]
+*	- results/regressions/one_step_[1-3]_*[_nosen]
+*
+*Output files:
+*	- results/tables/table_premiums_rankings_*[_nosen/_mixed].tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_tenured_censored.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates tables analyzing pay premiums and rankings specifically for tenured faculty, comparing results with all faculty
+*
+*Input files:
+*	- data/output/institution_level_database_*
+*	- data/additional_processing/final_institution_list_medical
+*	- data/output/tenured_only_estimates_*[_nosen]
+*
+*Output files:
+*	- results/tables/table_tenured_*[_nosen].tex
+*	- results/tables/table_tenured.csv
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_figure_event_studies_censored.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates event study figures showing wage patterns around job moves by institution prestige and coworker salary
+
+*   Input: data/output/institution_level_database_*.dta
+*          data/output/final_database_*_with_dummies.dta
+*          data/additional_processing/final_institution_list_medical.dta
+*   Output: results/figures/figure_event_prestige_panel_A_universities.pdf
+*           results/figures/figure_event_prestige_panel_B_colleges.pdf
+*           results/figures/figure_event_coworker.pdf
+*           results/figures/figure_event_prestige_people_counts.xlsx
+*           results/figures/figure_event_coworker_people_counts.xlsx
+					
+
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_figure_binscatter_additional.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates binscatter plots of institution fixed effects vs rankings with alternative weighting schemes
+
+*   Input: data/output/final_database_clean_with_dummies.dta
+*          data/output/institution_level_database_clean.dta
+*          data/additional_processing/final_institution_list_medical.dta
+*          data/output/dummy_estimates_file_clean_grouped.dta
+*   Output: results/figures/figure_binscatter_weighted_movers.png
+*           results/figures/figure_binscatter_grouped.png
+*           results/figures/figure_fe_ranking_wmovers_people_counts.xlsx
+*           results/figures/figure_fe_ranking_grouped_people_counts.xlsx
+					
+
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_job_satisfaction.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (garromar@bu.edu)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates LaTeX tables analyzing the relationship between institution rankings and faculty job satisfaction using both two-step and one-step AKM estimates
+*
+*Input files:
+*	- results/regressions/regression_satisfaction_ts[1-3][sat_vsat/sat_sat][_nosen]
+*	- results/regressions/regression_satisfaction_os[1-3][sat_vsat/sat_sat][_nosen]
+*
+*Output files:
+*	- results/tables/table_jobsat_rankings_sat_vsat.tex (very satisfied)
+*	- results/tables/table_jobsat_rankings_sat_sat.tex (satisfied)
+*	- results/tables/table_jobsat_rankings_sat_vsat_nosen.tex
+*	- results/tables/table_jobsat_rankings_sat_sat_nosen.tex
+*	- results/tables/table_jobsat_rankings_sat_vsat_mixed.tex
+*	- results/tables/table_jobsat_rankings_sat_sat_mixed.tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_cwd.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates LaTeX table showing compensating wage differentials simulation results
+
+*   Input: results/regressions/cwd_sim_*_nosen.ster
+*          data/output/compensation_diff_file.dta
+*          results/tables/simul_uncorrected_variances_*_nosen.csv
+*          results/tables/simul_corrected_variances_*_nosen.csv
+*   Output: results/tables/table_cwd_results.tex
+					
+
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_AKM_first_stage.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates LaTeX table showing first-stage AKM regression results with time-varying covariates
+
+*   Input: results/regressions/all_clust_raw*.ster
+*          results/regressions/all_clust_clean*.ster
+*   Output: results/tables/table_AKM_first_stage*.tex
+					
+
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_figure_mobility_summary.do
+Heading: /*
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates figures summarizing mobility patterns and salary changes around job moves
+
+*   Input: data/output/final_database_*_with_dummies.dta
+*          data/output/institution_level_database_*.dta
+*   Output: results/figures/figure_hist_l_change_ranking_within*.png
+*           results/figures/figure_binscat_d_salary_vs_d_rankings*.png
+*           results/figures/figure_hist_l_change_ranking_within*_count.csv
+*           results/figures/figure_binscat_d_salary_vs_d_rankings*_count.csv
+					
+
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/output_number_leaves.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: outputs the number of leave episodes for reporting in the paper text, counting faculty with proper leave spells from academic employment
+*
+*Input files:
+*	- data/raw/leave_check_v4_renamed.dta
+*
+*Output files:
+*	- results/text/n_leaves.tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/output_number_inconsistent_movers.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: outputs the number of inconsistent movers for reporting in the paper text, identifying faculty with inconsistent institution coding across spells
+*
+*Input files:
+*	- data/temporary/switcher_file
+*
+*Output files:
+*	- results/text/n_leaves.tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/master_tables_and_figures.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: master do file for creating all tables and figures in the paper, orchestrating the complete data analysis pipeline from summary statistics to final results
+*
+*Input files:
+*	- (Various files through called programs - see individual programs for details)
+*
+*Output files:
+*	- (All tables and figures - see individual programs for complete list)
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/get_n_for_profit_schools.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: analyzes the number and distribution of for-profit schools in the sample by merging IPEDS sector information with institution-level database
+*
+*Input files:
+*	- data/raw/IPEDS_v2
+*	- data/output/institution_level_database_clean.dta
+*
+*Output files:
+*	- (Summary table displayed in console)
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_test_wilcoxon.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: performs Wilcoxon signed-rank tests on faculty mobility patterns, testing symmetry in institutional ranking changes for faculty job transitions
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean
+*
+*Output files:
+*	- (Statistical test results displayed in console)
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_variance_decomp.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates tables of variance decomposition for AKM fixed effects, analyzing the share of wage variance explained by individual and institution components
+*
+*Input files:
+*	- data/output/final_database_*_with_dummies.dta
+*	- data/temporary/file_for_R_regression_collapsed_*.csv
+*	- results/tables/corr_net_field_uncollapsed.csv
+*	- results/tables/corr_net_field_collapsed.csv
+*	- results/tables/*corrected_variances_*.csv
+*	- results/tables/collapsed_*corrected_variances_*.csv
+*
+*Output files:
+*	- results/tables/table_variance_decomp_*.tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_transition_coworker_censored.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates transition matrices based on coworker average salaries, analyzing faculty mobility patterns across institutions with different peer salary levels
+*
+*Input files:
+*	- data/output/institution_level_database_clean
+*	- data/additional_processing/final_institution_list_medical
+*	- data/output/final_database_clean_with_dummies.dta
+*
+*Output files:
+*	- results/tables/transitions_table_*_coworker.tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_summary_stats_censored.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates comprehensive summary statistics tables for individual-level and institution-level variables, generating multiple panels for the main descriptive statistics table
+*
+*Input files:
+*	- data/output/final_database_*_with_dummies.dta
+*	- data/output/institution_level_database_*
+*
+*Output files:
+*	- results/tables/table_summary_stats_*.tex
+*	- results/tables/table_1_panel_A.tex
+*	- results/tables/table_1_panel_B.tex
+*	- results/tables/table_1_panel_C.tex
+*	- results/tables/table_1_panel_D.tex
+*===============================================================================
+*/
+========================================
+
+File: data_analysis/create_table_ranking_imputation_censored.do
+Heading: /*
+*===============================================================================
+*Project: Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu) 
+*
+*Description: creates tables for ranking imputation analysis, merging institution estimates with IPEDS rankings and generating summary statistics for institutions with missing rankings
+*
+*Input files:
+*	- data/additional_processing/dummy_estimates_file_clean
+*	- data/output/iped_university_rank_cw
+*	- data/output/iped_college_rank_cw
+*	- data/output/clean_ipeds
+*
+*Output files:
+*	- results/tables/table_A3.csv
+*	- results/tables/table_imputed_institutions.csv
+*===============================================================================
+*/
+========================================
