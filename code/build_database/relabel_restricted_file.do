@@ -1,11 +1,21 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	relabels restricted use Surveys of Doctorate Recipients
-*/
 *===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	applies variable labels to all SDR restricted-use variables
+*					(employment, postdoc, wages, faculty rank, tenure, degrees,
+*					demographics, and survey identifiers); no data is modified
+
+*   Input: 		Default frame in memory (any raw SDR wave dataset)
+*   Output: 	Modifies variable labels in memory only; no files written
+
+*===============================================================================
+*/
 
 cap label var lwnvr "never worked"
 cap label var nwfam "reasons for not working: family responsibilities"

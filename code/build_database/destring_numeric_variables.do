@@ -1,11 +1,23 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	destrings numeric variables
-*/
 *===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	converts SDR string missing-value codes (L, M, F) to Stata
+*					extended missing values, destrings all numeric variables, and
+*					merges with the recoded dummies file
+
+*   Input: 		data/temporary/variables_left_handle
+*				data/temporary/recoded_dummies_file
+*   Output: 	data/temporary/converted_variables
+*				(deletes both input temp files after saving)
+
+*===============================================================================
+*/
 
 use "data/temporary/variables_left_handle", clear
 

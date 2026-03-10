@@ -36,7 +36,7 @@ global DRF_list  $drf17 $drf15 $drf13 $drf10 $drf08 $drf06 $drf03 ///
 
 
 *Loading basic regression-related programs used across the code (CLEANED) (DEPENDENCES EXPORTED)
-do "code/build_database/regression_programs.do"
+do "code/build_database/regression_programs_censured.do"
 
 
 *Processing individual waves from the SDR and appending them into a unique dataset
@@ -74,7 +74,7 @@ di "Created and cleaned switcher file", as result
 
 *Clean the database of people who did not switch institutions
 *Execution time 2.4 minutes (CLEANED)  (DEPENDENCES EXPORTED)
-qui do "code/build_database/clean_non_switchers.do"
+qui do "code/build_database/clean_non_switchers_censured.do"
 
 
 *Execution time 2 minutes
@@ -109,18 +109,18 @@ qui do "code/build_database/clean_ipeds.do"
 *Here I need to filter the database twice to arrive to the right set 
 *of institutions (CLEANED)
 *<1 minute
-qui do "code/build_database/add_institution_dummies.do" temporary
+qui do "code/build_database/add_institution_dummies_censured.do" temporary
 
 
 *I create temporary AKM estimates to limit the sample and get the right
 *connected set (CLEANED)
 *3.4 minutes
-qui do "code/build_database/create_institution_estimates" temporary
+qui do "code/build_database/create_institution_estimates_censured" temporary
 di "Created individual database, second", as result		
  
 
 *<1 minute (EXPORTED)
-qui do "code/build_database/create_regression_database.do" temporary
+qui do "code/build_database/create_regression_database_censured.do" temporary
 	
 *Once I have these estimates, I go back to invidual level data and limit the sample.
 *Then I estimate them a final time. (EXPORTED)

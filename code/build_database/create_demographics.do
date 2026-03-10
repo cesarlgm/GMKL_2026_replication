@@ -1,11 +1,27 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	cleans and creates demographic variables
-*/
 *===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	harmonizes and creates demographic variables from raw SDR
+*					fields, handling coding changes across survey waves:
+*					marital status, gender, race, birthplace, citizenship,
+*					children, partner employment, years since PhD
+
+*   Input: 		Default frame in memory (requires marsta, gender, racem/race,
+*				bthus, fncrgn, ctzn, chlvin, ch6, ch611, ch1218/ch1217,
+*				ch19/ch18, spowk, refyr, dgryr, age)
+*   Output: 	Modifies default frame: adds marst_f, female_f, race_f,
+*				foreign_f, bpl_f, citizen_f, with_children_f, ch6_f, ch611_f,
+*				ch1218_f, ch19_f, partner_working_f, partner_emptype_f,
+*				yrs_sc_phd_f; renames age to age_f
+
+*===============================================================================
+*/
 
 *-------------------------------------------------------------------------------
 *HANDLING OF MARITAL STATUS

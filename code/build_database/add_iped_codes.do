@@ -1,11 +1,24 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose:	converts osep to iped + adds institution labels
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	converts OSEP institution codes to IPEDS codes for the 1993
+*					and 1995 waves using the NSF crosswalk; adds institution name
+*					labels; renames instcod to raw_instcod and iped to instcod
+
+*   Input: 		Default frame in memory (requires panelid, refyr, instcod)
+*				data/raw/osep_to_iped_rev2014  (OSEP-to-IPEDS crosswalk)
+*				data/raw/inst_labels           (NSF institution name labels)
+*   Output: 	Modifies default frame: instcod converted to IPEDS format;
+*				inst_name added; raw_instcod preserves original OSEP/instcod
+
+*===============================================================================
 */
-*==============================================================================
 
 preserve
 	tempfile cross_walk	

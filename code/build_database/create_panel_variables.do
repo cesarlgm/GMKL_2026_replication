@@ -1,11 +1,24 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	creates some panel level variables
-*/
 *===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	loads the appended database, creates panelid and panel-level
+*					variables (wave counts, first/last wave), propagates
+*					time-invariant demographics from the most recent wave,
+*					expands to a balanced panel, and flags participation gaps
+
+*   Input: 		data/temporary/appended_database
+*   Output: 	Modifies dataset in memory: adds panelid, in_wave, first_wave,
+*				last_wave, waves_insample, max_waves, hole_in_participation;
+*				propagates female_f, race_f, foreign_f, bpl_f across waves
+
+*===============================================================================
+*/
 
 use "data/temporary/appended_database", clear
 

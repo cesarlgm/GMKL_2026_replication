@@ -1,9 +1,29 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	creates work related variables
+*===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	creates and harmonizes work-related variables for a given
+*					survey wave: employment status, postdoc, job tenure,
+*					employer type, real wages (CPI-deflated to 2020 USD),
+*					faculty rank, tenure status, and institution code
+
+*   Input: 		Argument 1: survey wave year
+*				Default frame in memory (requires lfstat, pdix/pd1ey95, refyr,
+*				strtmn, strtyr, emtp, salary, facrank, tensta, emus, instcod,
+*				hrswk, wkswk, earn)
+*				data/raw/CPIAUCSL.xls  (FRED CPI series)
+*   Output: 	Modifies default frame: adds employed_f, unemployed_f,
+*				in_postdoc_f, current_date_f, start_date_f, time_current_job_f,
+*				employer_type_f, in_academia_f, r_salary_f, r_hrwage_f, earn_f,
+*				full_time_f, faculty_rank_f, prof_rank_f, tenure_status_f,
+*				in_tenure_track_f, employed_us_f, instcod_f
+
+*===============================================================================
 */
 
 local year `1'
