@@ -11,7 +11,7 @@
 #
 #   Input: data/temporary/file_for_R_regression_*.csv
 #          data/temporary/file_for_R_regression_collapsed_*.csv
-#          code/build_database/correct_variances.R
+#          code/build_database/correct_variances_functions.R
 #   Output: results/uncollapsed_variance_corrected_*.RDS
 #           results/collapsed_variance_corrected_*.RDS
 #					
@@ -31,7 +31,7 @@ data <- read.csv("data/temporary/file_for_R_regression_raw.csv")
 data_collapsed <- read.csv("data/temporary/file_for_R_regression_collapsed_raw.csv")
 
 
-source("code/build_database/correct_variances.R")
+source("code/build_database/correct_variances_functions.R")
 
 
 all_variance <- correct_variances(data,cluster="panelid")
@@ -63,7 +63,7 @@ data <- read.csv("data/temporary/file_for_R_regression_clean.csv")
 data_collapsed <- read.csv("data/temporary/file_for_R_regression_collapsed_clean.csv")
 
 
-source("code/build_database/correct_variances.R")
+source("code/build_database/correct_variances_functions.R")
 
 
 all_variance <- correct_variances(data,cluster="panelid")

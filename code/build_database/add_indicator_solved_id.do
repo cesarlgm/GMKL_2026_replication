@@ -88,7 +88,7 @@ frame change default
 	cap frame drop add_fixes_new
 	frame create add_fixes_new
 	frame change add_fixes_new
-		use "data/raw/people_to_check_new", clear
+		use "data/raw/people_to_check_new_cases_corrected", clear
 		
 		keep refid period new_spell new_instcod
 		

@@ -7,6 +7,9 @@
 !**/documentation/replication/**/
 *tempFiles/
 
+missing_code.md
+dataset_list.md
+
 *.csv
 *.dta
 *.xlsx

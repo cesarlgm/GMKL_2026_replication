@@ -166,7 +166,8 @@ di "Created one-step estimates", as result
 
 
 *Saving the table with the time varying estimates (CLEANED)
-do "code/build_database/create_two_step_estimates_varying.do"
+do "code/build_database/create_one_step_estimates_varying.do"
+
 
 *Estimates net of field (CLEANED)
 *4 secs
@@ -202,7 +203,7 @@ di "Starting variance correction. This can take up to 2 hours. DO NOT CLOSE THE 
 {
 	do "code/build_database/output_R_dataset.do" //CLEANED
 	
-	rscript using "code/build_database/variance_correction.R" //CLEANED
+	rscript using "code/build_database/correct_variances_execute.R" //CLEANED
 }
 
 *Creating simulation of compensating differentials (LIKELY DEPRECATED)

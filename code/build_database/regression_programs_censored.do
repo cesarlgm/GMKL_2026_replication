@@ -8,9 +8,15 @@
 *				Shulamit Kahn (skahn@bu.edu)
 *				Kevin Lang (lang@bu.edu)
 
-*	Description: 	this file centralizes all the regression specifications
-*					all the programs that build regression tables
+*	Description: 	defines Stata programs containing regression specifications
+*					for the censored analysis. The main program get_spec() returns 
+*					university fixed effects, control variables, and base specification
+*					components for different regression types (main, endowment, tenured, jobsat).
+*					Used by analysis files to maintain consistent specifications across tables.
 
+*   Input: None (program definition file)
+*   Output: None (called by other do files)
+					
 
 *===============================================================================
 */

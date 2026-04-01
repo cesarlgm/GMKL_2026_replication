@@ -55,7 +55,7 @@ local important_variables check_priority new_spell new_instcod to_check ///
 		problem_type pos_on_leave proper_leave inconsistent_instcod in_academia ///
 		full_time in_tenure_track any_medical_drop any_exclusion
 
-do "code/build_database/extract_spell_revision" people_to_check_o to_check 	///
+do "code/build_database/extract_spell_revision" new_cases_o to_check 	///
 	`important_variables'
 
 
@@ -63,7 +63,7 @@ frame change default
 cap frame drop fix_dataset
 frame create fix_dataset
 frame change fix_dataset
-	use "data/temporary/people_to_check_o", clear
+	use "data/temporary/people_to_check_new_cases_o", clear
 
 	
 	order panelid refid period refyr, first
@@ -102,7 +102,7 @@ frame change fix_dataset
 	
 	preserve
 		keep if check_priority==1
-		save "data/temporary/people_to_check_new_o", replace
+		save "data/temporary/people_to_check_new_cases_second_pass_o", replace
 	restore
 	
 	preserve

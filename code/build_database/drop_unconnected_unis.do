@@ -17,7 +17,7 @@
 
 *   Input: 		Argument 1: file name stem used for intermediate CSV files
 *				Default frame in memory (requires panelid, acad_spell_id, instcod, inst_name)
-*				code/build_database/exe_connected_set_extract.R (called via rscript)
+*				code/build_database/connected_set_execute.R (called via rscript)
 *				data/temporary/<file_name>_executed.csv (produced by R script)
 *   Output: 	data/temporary/<file_name>.csv (mover transition list, input to R script)
 *				Default frame restricted to connected-set institutions; adds observation_type
@@ -26,6 +26,8 @@
 
 *===============================================================================
 */
+
+
 
 
 
@@ -72,7 +74,7 @@ local input_file "data/temporary/`file_name'.csv"
 local output_file "data/temporary/`file_name'_executed.csv"
 
 
-rscript using "code/build_database/exe_connected_set_extract.R", ///
+rscript using "code/build_database/connected_set_execute.R", ///
 	args(`input_file' `output_file')
 
 preserve

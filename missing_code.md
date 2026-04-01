@@ -1,147 +1,119 @@
-# Missing Code Files in Replication Package
+# Cross-File Dependency Audit: Missing Code Files
 
-This document lists all do files and programs that are called in the replication code but are not currently present in the `replication_package/code/` directory.
+**Replication package root:** `replication_package/`
+**Date:** 2026-03-17
+**Auditor:** Stata Audit Agent
+**Scope:** All `do`, `run`, `include`, and `rscript using` calls in every `.do` file under `replication_package/code/`
 
-## Missing Do Files from build_database/
+**Key rule applied:** If `foo.do` is called and only `foo_censored.do` exists, the call is classified as "covered by censored version" (Section 3), not as missing. If neither exists, it is truly missing (Section 1).
 
-### Manual Correction Programs
-- **correct_inconsistent_instcods_v2.do**
-  - Called from: add_indicator_solved_id.do
-  - Purpose: Corrects inconsistent institution codes
+---
 
-- **add_old_modification_lists.do**
-  - Called from: add_indicator_solved_id.do
-  - Purpose: Adds old modification lists to the data
+## Section 1 — Truly Missing Files
 
-- **add_leave_check_v4.do**
-  - Called from: add_indicator_solved_id.do
-  - Purpose: Adds leave episode checks
+Files that are called from within the replication package and have **no** counterpart (plain or `_censored`) anywhere under `replication_package/code/`.
 
-- **add_new_corrected_people.do**
-  - Called from: add_indicator_solved_id.do
-  - Purpose: Adds newly corrected people to the database
+### 1a. Missing do-files
 
-### Institution Code Processing
-- **global_instcod_merge.do** *(not approved)*
-  - Called from: clean_non_switchers.do, clean_non_switchers_censored.do, first_round_spell_cleaning.do
-  - Purpose: Performs global institution code merges
+| # | Missing file (as called) | Called from | Line(s) |
+|---|---|---|---|
+| 1 | `code/build_database/global_instcod_merge.do` | `clean_switchers.do`, `clean_non_switchers_censored.do` | 43, 48 |
+| 2 | `code/build_database/institution_code_corrections.do` | `clean_switchers.do`, `clean_non_switchers_censored.do` | 289, 52 |
+| 3 | `code/build_database/drop_special_instcods.do` | `clean_switchers.do`, `clean_non_switchers_censored.do` | 297, 50 |
+| 4 | `code/build_database/update_inst_labels.do` | `clean_switchers.do`, `clean_non_switchers_censored.do` | 410, 54 |
+| 5 | `code/build_database/remaining_filters.do` | `create_individual_databases.do` | 35 |
+| 6 | `code/build_database/create_one_step_estimates_varying.do` | `master_build.do` | 169 |
+| 7 | `code/build_database/prepare_medical_drop.do` | `master_build.do` | 186 |
+| 8 | `code/build_database/fix_ranking_fe_names.do` | `create_regression_database.do`, `create_regression_database_censored.do`, `create_table_ranking_imputation_censored.do` | 199, 199, 189 |
+| 9 | `code/build_database/fix_ranking_database_names.do` | `create_regression_database.do`, `create_regression_database_censored.do`, `create_table_ranking_imputation_censored.do` | 207, 207, 197 |
 
-- **drop_special_instcods.do** *(not approved)*
-  - Called from: clean_non_switchers.do, clean_non_switchers_censored.do, clean_switchers.do
-  - Purpose: Drops special institution codes from the dataset
+### 1b. Missing R scripts
 
-- **institution_code_corrections.do** *(not approved)*
-  - Called from: clean_non_switchers.do, clean_non_switchers_censored.do, clean_switchers.do
-  - Purpose: Applies institution code corrections
+Called via `rscript using` but absent from the package:
 
-- **update_inst_labels.do** *(not approved)*
-  - Called from: clean_non_switchers.do, clean_non_switchers_censored.do, clean_switchers.do, create_check_database.do, recompute_spell_level_variables.do, extract_spell_revision.do
-  - Purpose: Updates institution labels
+| # | Missing R file | Called from | Line |
+|---|---|---|---|
+| 10 | `code/build_database/kss_correction_full.R` | `correct_KSS_master.do` | 30 |
+| 11 | `code/build_database/connectedness_tenured_faculty.R` | `create_tenured_only_estimates_censored.do` | 95 |
+| 12 | `code/build_database/connectedness_job_satisfaction.R` | `create_job_satisfaction_estimates_censored.do` | 75 |
 
-### Data Cleaning Programs
-- **add_final_code_drops.do**
-  - Called from: clean_wages.do
-  - Purpose: Applies final code-based drops to the dataset
+R files confirmed present: `code/build_database/variance_correction.R`, `code/install_R_packages.R`, `code/R_setup.R`.
 
-- **exclude_outliers.do**
-  - Called from: clean_wages.do (3 times with different parameters)
-  - Purpose: Excludes wage outliers from the dataset
+---
 
-- **remaining_filters.do** *(not approved)*
-  - Called from: create_individual_databases.do
-  - Purpose: Applies remaining data filters
+## Section 2 — Typos and Path Errors
 
-### KSS Corrections
-- **output_KSS_datasets.do**
-  - Called from: correct_KSS_master.do
-  - Purpose: Outputs datasets for KSS corrections
+### 2a. `_censured` misspelling in `master_build.do`
 
-- **get_number_schools_per_type.do**
-  - Called from: correct_KSS_master.do
-  - Purpose: Computes number of schools per type for KSS
+`master_build.do` calls five files using the misspelled suffix `_censured`. The correctly spelled `_censored` variants exist on disk and will not be found because Stata filename matching is exact.
 
-### Manual Checking and Flagging
-- **add_old_corrections.do**
-  - Called from: create_check_database.do
-  - Purpose: Adds old corrections to check database
+| Called path (broken) | Correct file that exists | Line in `master_build.do` |
+|---|---|---|
+| `code/build_database/regression_programs_censured.do` | `regression_programs_censored.do` | 39 |
+| `code/build_database/clean_non_switchers_censured.do` | `clean_non_switchers_censored.do` | 77 |
+| `code/build_database/add_institution_dummies_censured.do` | `add_institution_dummies_censored.do` | 112 |
+| `code/build_database/create_institution_estimates_censured` | `create_institution_estimates_censored.do` (also missing `.do` extension) | 118 |
+| `code/build_database/create_regression_database_censured.do` | `create_regression_database_censored.do` | 123 |
 
-- **flag_people_for_correction.do**
-  - Called from: create_check_database.do
-  - Purpose: Flags individuals who need manual correction
+**Fix:** In `master_build.do`, replace all five occurrences of `_censured` with `_censored`. Also add `.do` to line 118.
 
-### Ranking and Name Processing
-- **fix_ranking_fe_names.do** *(not approved)*
-  - Called from: create_table_ranking_imputation_censored.do, create_regression_database.do, create_regression_database_censored.do
-  - Purpose: Fixes ranking fixed effect names
+### 2b. Wrong-folder path for `regression_var_relabel.do`
 
-- **fix_ranking_database_names.do** *(not approved)*
-  - Called from: create_table_ranking_imputation_censored.do, create_regression_database.do, create_regression_database_censored.do
-  - Purpose: Fixes ranking database names
+`create_one_step_estimates.do` at line 53 calls:
 
-- **fix_university_ranking_names.do** *(not approved)*
-  - Called from: import_rankings.do
-  - Purpose: Fixes university ranking names
+```stata
+do "code/data_analysis/regression_var_relabel.do"
+```
 
-- **fix_college_ranking_names.do** *(not approved)*
-  - Called from: import_rankings.do
-  - Purpose: Fixes college ranking names
+The file does not exist under `data_analysis/`. It exists at:
 
-### Additional Estimation Programs
-- **create_iped_ranking_cw.do** 
-  - Called from: master_build.do
-  - Purpose: Creates IPED ranking crosswalk
+```
+code/build_database/regression_var_relabel.do
+```
 
-- **create_two_step_estimates_varying.do**
-  - Called from: master_build.do
-  - Purpose: Creates two-step estimates with time-varying effects
+**Fix:** Change the path in `create_one_step_estimates.do` line 53 to `"code/build_database/regression_var_relabel.do"`.
 
-- **prepare_medical_drop.do**
-  - Called from: master_build.do
-  - Purpose: Prepares medical schools filtering
+---
 
-- **create_cwd_estimates.do**
-  - Called from: master_build.do (commented out - possibly deprecated)
-  - Purpose: Creates compensating wage differential estimates
+## Section 3 — Calls Covered by `_censored` Version
 
-## Missing Do Files from data_analysis/
+These files are called without the `_censored` suffix, but only the `_censored` variant exists in the package. Per the audit rule, these are classified as covered — not missing — because the censored version provides the functional equivalent.
 
-### Main Analysis Files (only _censored versions exist)
+### 3a. Analysis scripts — called from `master_tables_and_figures.do`
 
-### Missing Analysis Files
-- **create_table_transition.do**
-  - Called from: master_tables_and_figures.do
-  - Purpose: Creates transition tables
+`master_tables_and_figures.do` calls the plain (non-censored) names throughout. The orchestrator must be updated to call the `_censored` variants for the package to be executable.
 
-- **number_inconsistent_movers.do**
-  - Called from: master_tables_and_figures.do (commented out)
-  - Note: output_number_inconsistent_movers.do exists but this variant is called
+| Called file (plain, broken) | `_censored` equivalent present | Line |
+|---|---|---|
+| `code/data_analysis/create_table_summary_stats.do` | `create_table_summary_stats_censored.do` | 20 |
+| `code/data_analysis/create_table_premiums_rankings.do` | `create_table_premiums_rankings_censored.do` | 26 |
+| `code/data_analysis/create_table_premiums_endowment.do` | `create_table_premiums_endowment_censored.do` | 29 |
+| `code/data_analysis/create_table_one_step_estimates_w_origin.do` | `create_table_one_step_estimates_w_origin_censored.do` | 41 |
+| `code/data_analysis/create_table_tenured.do` | `create_table_tenured_censored.do` | 56 |
+| `code/data_analysis/create_table_field_specific_results.do` | `create_table_field_specific_results_censored.do` | 59 |
+| `code/data_analysis/create_table_transition.do` | `create_table_transition_censored.do` | 62 |
+| `code/data_analysis/create_table_transition_coworker.do` | `create_table_transition_coworker_censored.do` | 65 |
+| `code/data_analysis/create_table_ranking_imputation.do` | `create_table_ranking_imputation_censored.do` | 68 |
+| `code/data_analysis/create_figure_event_studies.do` | `create_figure_event_studies_censored.do` | 74 |
 
-- **regression_var_relabel.do**
-  - Called from: create_one_step_estimates.do
-  - Purpose: Relabels regression variables
+> Lines 80–89 of `master_tables_and_figures.do` are inside a `/* ... */` block comment and are not executed.
 
-## Files with Confidentiality Markers Needing Attention
+### 3b. Build-database scripts — called from `master_build.do`
 
-The following files contain confidentiality markers (????/XXXX) but do not have the `_censored` suffix. However, censored versions of these files already exist in the codebase:
+| Called file (plain, broken) | `_censored` equivalent present | Line |
+|---|---|---|
+| `code/build_database/create_iped_ranking_cw.do` | `create_iped_ranking_cw_censored.do` | 99 |
+| `code/build_database/create_institution_estimates` (no `.do`) | `create_institution_estimates_censored.do` | 142 |
 
-### build_database/
-- add_institution_dummies.do (censored version exists)
-- add_manual_rechecks.do (censored version exists)
-- clean_non_switchers.do (censored version exists)
-- create_grouped_estimates.do (censored version exists)
-- create_institution_estimates.do (censored version exists)
-- create_job_satisfaction_estimates.do (censored version exists)
-- create_regression_database.do (censored version exists)
-- create_tenured_only_estimates.do (censored version exists)
-- regression_programs.do (regression_programs_censured.do exists - note spelling)
-- residualize_field.do (censored version exists)
+---
 
-**Recommendation:** Remove or archive the non-censored versions of these files to avoid accidental use with confidential data markers.
+## Section 4 — Recommended Actions
 
-## Summary
-
-- **Total missing do files:** 37 files
-- **Files with only censored versions available:** 10 files
-- **Files needing confidentiality review:** 10 files
-
-Most missing files appear to be helper programs for data cleaning, manual corrections, and specific data transformations that may have been developed outside the replication package directory.
+| Priority | Action |
+|---|---|
+| High | In `master_build.do`, fix all 5 `_censured` → `_censored` typos (lines 39, 77, 112, 118, 123). Also add `.do` extension on line 118. |
+| High | In `master_tables_and_figures.do`, update all 10 plain-name calls (lines 20–74) to their `_censored` equivalents. |
+| High | In `create_one_step_estimates.do` line 53, correct the path from `code/data_analysis/regression_var_relabel.do` to `code/build_database/regression_var_relabel.do`. |
+| Medium | Document items 1–9 (truly missing do-files) explicitly. These are likely NORC-enclave-only scripts. Add a README note or stub files explaining they require NORC access. |
+| Medium | Provide `kss_correction_full.R`, `connectedness_tenured_faculty.R`, and `connectedness_job_satisfaction.R` (items 10–12) or document that they run inside NORC. |
+| Low | The hardcoded `cd "K:\Research\Kahn_BU\AKM_SDR"` at line 28 of `master_do_file.do` will fail for any external replicator. Replace with an instruction to set the working directory manually. |
