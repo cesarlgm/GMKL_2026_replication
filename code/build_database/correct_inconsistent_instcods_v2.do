@@ -29,8 +29,8 @@ preserve
 	use "data/raw/inconsistent_movers_processed.dta", clear
 	
 	*I am ignoring the corrections on medical centers. Shu was quite inconsistent in her decisions.
-	generate medical_center=inlist(instcod, "XXXXXXXXXXX", "216366", "228653")
-	
+	gen_medical_center
+
 	egen any_medical=max(medical_center), by(panelid)
 	
 	drop if any_medical==1

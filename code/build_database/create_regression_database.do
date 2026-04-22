@@ -1,4 +1,4 @@
-﻿/*
+/*
 *===============================================================================
 * Do Elite Universities Overpay Their Faculty?
 *===============================================================================
@@ -15,7 +15,7 @@
 *          data/output/iped_college_rank_cw.dta
 *          data/output/clean_ipeds.dta
 *   Output: data/temporary/institution_level_database_*.dta or data/output/institution_level_database_*.dta
-					
+
 
 *===============================================================================
 */
@@ -30,30 +30,30 @@ else {
 }
 
 foreach database in raw   clean {
-	
+
 	if "`source'"!="temporary" {
-		local keepvars  inst_fe_nosen se_inst_fe_nosen 
-	
+		local keepvars  inst_fe_nosen se_inst_fe_nosen
+
 		use "data/`source'/dummy_estimates_file_`database'_nosen", clear
-		
+
 		keep all_clust se_all_clust instcod
-		
+
 		rename all_clust inst_fe_nosen
 		rename se_all_clust se_inst_fe_nosen
-		
+
 		tempfile nosen
 		save `nosen'
 	}
-	
-	use  "data/`source'/dummy_estimates_file_`database'", clear 
-	
+
+	use  "data/`source'/dummy_estimates_file_`database'", clear
+
 	if "`source'"!="temporary" {
 		merge 1:1 instcod using  `nosen', keep(1 3) nogen
 	}
-	
+
 	cap drop _merge
-	XXXX
-	
+	replacements_regdat, part(first)
+
 	order instcod inst_name, first
 
 	merge 1:1 instcod using "data/output/iped_university_rank_cw", nogen
@@ -62,11 +62,8 @@ foreach database in raw   clean {
 
 	*Now I add the cleaned iped database
 	merge 1:1 instcod using "data/output/clean_ipeds" ,nogen keep(1 2 3)
-	
-	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	
-	drop if missing(all_clust)&instcod!=????
 
+	replacements_regdat, part(second)
 
 	*FINAL CLEANING OF INSTITUTION VARIABLES
 	*==================================================================
@@ -113,14 +110,14 @@ foreach database in raw   clean {
 	label define institution_type 1 "Research university" 2 "College" 3 "No ranking"
 	label values institution_type institution_type
 
-		
+
 	replace inst_ranking=rank_uni 	if institution_type==1
 	replace inst_ranking=rank_coll 	if institution_type==2
 	replace inst_ranking=0 			if institution_type==3
 
 
 	*Manual correction to institution rankings
-	XXXX
+	replacements_regdat, part(third)
 
 	*Labelling variables
 	rename se_all_clust se_inst_fe
@@ -165,7 +162,7 @@ foreach database in raw   clean {
 	drop if inst_name==""
 	preserve
 
-		
+
 	tempfile name_cw
 		import excel "data/raw/unranked_list.xlsx", sheet("cw_sheet") firstrow clear
 	save `name_cw'
@@ -187,13 +184,13 @@ foreach database in raw   clean {
 	merge 1:1 inst_name using  `name_cw', nogen  keep(1 3)
 	replace inst_name=link_name if link_name!=""
 
-	cap drop link_name 
+	cap drop link_name
 
 
 	rename inst_state state
 	replace state=strtrim(lower(state))
 	drop if instcod==""
-	
+
 
 	*Fixing instution names for the merging
 	do "code/build_database/fix_ranking_fe_names.do"
@@ -202,13 +199,13 @@ foreach database in raw   clean {
 
 	preserve
 		use "data/raw/us_news_rankings_v2.dta", clear
-		
+
 		*Fixing instution names for the merging
 		do "code/build_database/fix_ranking_database_names.do"
 
 
 		duplicates drop inst_name, force
-		
+
 		drop if rank==""
 
 		tempfile us_news_rankings
@@ -217,7 +214,7 @@ foreach database in raw   clean {
 
 	drop if instcod==""
 ***************************************************************************************
-	replace state="ca" if inst_name==XXXX 
+	replacements_regdat, part(fourth)
 
 	*No unranked institution appears in the midwest_colleges rankings
 	merge 1:1 inst_name state using `us_news_rankings'
@@ -232,10 +229,10 @@ foreach database in raw   clean {
 
 	rename r_endowment_per_student endowment_per_student
 
-	*IMPUTE RANKINGS 
+	*IMPUTE RANKINGS
 	do "code/build_database/impute_rankings"
-	
-	
+
+
 	drop if missing(inst_fe)&instcod!=????
 
 	cap drop inst_ranking
@@ -254,10 +251,10 @@ foreach database in raw   clean {
 	forvalues j=1/2 {
 		xtile temp`j'=inst_ranking if new_type==`j', nq(100)
 		replace inst_ranking_p=temp`j' if new_type==`j'
-		
+
 		replace inst_ranking_p_r=100-inst_ranking_p if new_type==`j'
 	}
-	
+
 	drop temp*
 
 	generate 	l_inst_ranking_p=inst_ranking_p
@@ -304,5 +301,5 @@ foreach database in raw   clean {
 		l_enrollment_total_m l_r_endowment l_enrollment_grad_m l_enrollment_ugrad_m ///
 		l_enrollment_total_m l_r_endowment, first
 
-	save "data/`output'/institution_level_database_`database'", replace	
+	save "data/`output'/institution_level_database_`database'", replace
 }

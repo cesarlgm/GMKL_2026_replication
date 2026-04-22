@@ -12,8 +12,7 @@
 *				dataset. Loads corrections into a temporary Stata frame, drops
 *				observations associated with medical centers (excluded due to
 *				inconsistent coding), and merges the remaining corrections back
-*				into the default frame on refid-refyr. Censored version for
-*				public replication: institution identifiers replaced with XXXX.
+*				into the default frame on refid-refyr. 
 
 *   Input: 	data/raw/leave_check_v4_renamed.dta
 *   Output: 	Modifies default frame in place: adds shuinstcod and shuacad_spell
@@ -31,8 +30,8 @@ frame change leave_check
 	use "data/raw/leave_check_v4_processed", clear
 
 	*I am ignoring the corrections on medical centers. Shu was quite inconsistent in her decisions.
-	generate medical_center=inlist(instcod, "XXXXXXxx", "216366", "228653")
-	
+	gen_medical_center
+
 	egen any_medical=max(medical_center), by(panelid)
 	
 	drop if any_medical==1

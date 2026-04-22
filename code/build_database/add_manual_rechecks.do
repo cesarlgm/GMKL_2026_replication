@@ -77,4 +77,4 @@ cap drop _merge
 
 ****************************************************************************************** Censored code ***********************
 *Finally I add the corrections I have to force to all the people
-replace instcod="XXXX" if instcod=="XXXX"
+do_recheck_correction

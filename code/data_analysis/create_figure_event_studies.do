@@ -23,9 +23,6 @@
 */
 
 
-
-
-
 cap program drop cr_graph_event
 program define cr_graph_event, 
 	syntax, type(str) n_quant(str)
@@ -41,13 +38,7 @@ program define cr_graph_event,
 		{
 			use "data/output/institution_level_database_`database'", clear
 
-******************************************** NOTE TO ANYONE REPLICATING THIS CODE.  REPLACE ???? WITH THE BEST RANKED SCHOOL 
-******************************************** BE CONSISTENT ACROSS PROGRAMS
-
-			replace inst_fe=0 if instcod=="????"
-			replace inst_fe_trim=0 if instcod=="????"
-			
-			replace se_inst_fe=0 if instcod=="????"
+			set_zero_fe
 
 			merge 1:1 instcod using "data/additional_processing/final_institution_list_medical", keep(1 3)  nogen
 
@@ -175,13 +166,8 @@ program define cr_graph_event,
 	else if "`type'"=="coworker" {
 		{
 			use "data/output/institution_level_database_`database'", clear
-******************************************** NOTE TO ANYONE REPLICATING THIS CODE.  REPLACE ???? WITH THE BEST RANKED SCHOOL 
-******************************************** BE CONSISTENT ACROSS PROGRAMS
-			
-			replace inst_fe=0 if instcod=="????"
-			replace inst_fe_trim=0 if instcod=="????"
-			
-			replace se_inst_fe=0 if instcod=="????"
+?
+			set_zero_fe
 
 			merge 1:1 instcod using "data/additional_processing/final_institution_list_medical", keep(1 3)  nogen
 

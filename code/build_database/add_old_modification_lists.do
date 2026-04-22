@@ -26,7 +26,7 @@ preserve
 tempfile old_list
 	use "data/raw/modification_list_old_part_shu", clear
 
-	generate medical_center=inlist(instcod, "xxxxxXXXXXX", "216366", "228653")
+	gen_medical_center
 	
 	egen any_medical=max(medical_center), by(panelid)
 	

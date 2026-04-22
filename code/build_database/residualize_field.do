@@ -15,7 +15,7 @@
 *          data/output/institution_level_database_*.dta
 *          data/additional_processing/indiv_fe_estimates_*.dta
 *   Output: results/tables/corr_net_field_collapsed*.csv
-					
+
 
 *===============================================================================
 */
@@ -28,22 +28,22 @@ program define residualize_field
 	if "`nosen'"!="" {
 		local stub _nosen
 	}
-	
+
 	*===========================================================================
 	*UNCOLLAPSED ESTIMATION
 	*===========================================================================
 	use "data/output/final_database_`d_type'_with_dummies.dta", clear
-	
+
 	merge m:1  instcod  using "data/output/institution_level_database_`d_type'", keep(3)
-	
+
 	merge m:1  panelid  using "data/additional_processing/indiv_fe_estimates_`d_type'`stub'.dta", nogen keep(3)
-		
-	*Fixing minor fields 
+
+	*Fixing minor fields
 	gen minorfield=ndgmeng
 	replace minorfield= dgrmeng if minorfield==. & dgrmeng !=.
 	replace minorfield = 61 if minorfield>60 & minorfield!=.
 
-	
+
 	label define minorfield 11 " Computer and information sciences" ///
 	12 " Mathematics and statistics" ///
 	21 " Agricultural and food sciences" ///
@@ -73,57 +73,57 @@ program define residualize_field
 	label values minorfield minorfield
 
 
-	
+
 	misstable summ minorfield
 	table minorfield
-	
+
 	regress indiv_fe i.minorfield
-	
+
 	predict r_indiv_fe, residuals
 
-		
+
 	pwcorr indiv_fe l_inst_ranking_p
 	pwcorr r_indiv_fe l_inst_ranking_p
-	
+
 
 	pwcorr indiv_fe l_inst_ranking_p if institution_type==1
 
 	pwcorr indiv_fe l_inst_ranking_p if institution_type==2
-	
+
 	pwcorr r_indiv_fe l_inst_ranking_p if institution_type==1
-	
+
 	pwcorr r_indiv_fe l_inst_ranking_p if institution_type==2
-	
+
 	pwcorr r_indiv_fe inst_fe`stub'
-	
+
 	local uc_corr: display %9.3fc `r(rho)'
-	
+
 	preserve
 	clear
 	set obs 1
 	generate corr=`uc_corr'
 	export delimited using "results/tables/corr_net_field_uncollapsed`stub'.csv", replace
-	restore 
-	
+	restore
+
 
 	*===========================================================================
-	*COLLAPSED ESTIMATION	
+	*COLLAPSED ESTIMATION
 	*===========================================================================
 	use "data/output/final_database_`d_type'_with_dummies.dta", clear
 
-	
-	*Fixing minor fields 
+
+	*Fixing minor fields
 	gen minorfield=ndgmeng
 	replace minorfield= dgrmeng if minorfield==. & dgrmeng !=.
 	replace minorfield = 61 if minorfield>60 & minorfield!=.
 
 	gcollapse (mean) u_instcod* years_since_phd l_r_salary_f (max) has*  married ///
 		female tenured_f faculty_rank_f minorfield time_current_job, fast by(panelid acad_spell_id instcod)
-	
+
 	generate years_since_phd_sq=years_since_phd*years_since_phd
-	
+
 	eststo clear
-	
+
 	get_spec, type(fs:main) `nosen'
 
 	foreach spec in unife controls allcontrol sscontrol base {
@@ -131,106 +131,108 @@ program define residualize_field
 	}
 
 	local model all_clust
-	
+
 	*In this bit I am getting estimates of the fe without se.
 	eststo `model': cap reghdfe l_r_salary_f  `unife' `controls', ///
 			absorb(indiv_fe=panelid, savefe) nocons ///
 			keepsingleton vce(cl instcod)
-	
+
 	estfe . *
-	
+
 	preserve
-	tempfile `model'_fe		
-		
+	tempfile `model'_fe
+
 	parmest, saving(``model'_fe', replace)
 
-	use ``model'_fe', clear 
-	
+	use ``model'_fe', clear
+
 	generate to_keep=regexm(parm, "u_instcod")
 	drop if !to_keep
-	
+
 	split parm, parse("_")
-	
+
 	rename parm3 inst_number
 	destring inst_number, replace
-	
+
 	rename estimate `model'
 	rename stderr 	se_`model'
 	rename p		p_`model'
 	*********************************************************************************************************************************************
 	*I do this because ???? is the 271th institution
 	keep 		inst_number `model' se_`model' p_`model'
-	
+
 	save ``model'_fe', replace
 	restore
-	
-	
+
+
 	merge m:1 instcod using "data/additional_processing/institution_dummy_crosswalk_clean", ///
 		nogen keep(1 3)
 	merge m:1 inst_number using ``model'_fe'
 
 	replace all_clust=0 if instcod=="166027"
-	
+
 	cap drop indiv_fe
 	*Creating estimation files
 	eststo clear
-				
-				
+
+
 
 	local model all_clust
 
 	get_spec, type(fs:main)  `nosen'
-		
-	
+
+
+
 	foreach spec in unife controls allcontrol sscontrol base {
 		local `spec' `r(`spec')'
 	}
 
-		
+
 	*In this bit I am getting estimates of the fe without se.
 	eststo raw: cap reghdfe l_r_salary_f  `unife' `controls', ///
 			absorb(indiv_fe=panelid, savefe) nocons ///
 			keepsingleton vce(cl instcod)
-		
-	
+
+
 	cap drop r_indiv_fe
 	regress indiv_fe i.minorfield
 	predict r_indiv_fe, residuals
-	
+
 	merge m:1  instcod  using "data/output/institution_level_database_`d_type'", keep(3) nogen keepusing(l_inst_ranking_p institution_type)
 
 
 	pwcorr r_indiv_fe all_clust
-	
+
 	local c_corr: display %9.3fc `r(rho)'
-	
+
 	preserve
 	clear
 	set obs 1
 	generate c_corr=`c_corr'
 	export delimited using "results/tables/corr_net_field_collapsed`stub'.csv", replace
-	restore 
+	restore
 
-	
+
 	di as result "Correlations with log of rankings, without residualizing"
 	pwcorr indiv_fe l_inst_ranking_p if institution_type==1
-	
-	pwcorr indiv_fe l_inst_ranking_p if institution_type==2
-	
 
-	
-	di as result "Correlations with log of rankings, net of field"	
+	pwcorr indiv_fe l_inst_ranking_p if institution_type==2
+
+
+
+
+	di as result "Correlations with log of rankings, net of field"
 	pwcorr r_indiv_fe l_inst_ranking_p if institution_type==1
-	
+
 	pwcorr r_indiv_fe l_inst_ranking_p if institution_type==2
 
 
-end 
+end
 
 
 foreach d_type in raw  clean {
 	residualize_field, d_type(`d_type')
-	
+
 	residualize_field, d_type(`d_type') nosen
-	
+
 }

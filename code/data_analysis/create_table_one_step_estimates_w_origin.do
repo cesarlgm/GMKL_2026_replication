@@ -23,7 +23,10 @@
 capture program drop clean_origin_database
 program define clean_origin_database 
 	*First I drop people with missing time in current job
-	
+	ret_base_instcod
+	local base_instcod `r(base_code)'
+
+
 	drop if missing(time_current_job_f)
 	
 	do "code/build_database/update_observation_type.do" 1
@@ -61,10 +64,7 @@ program define clean_origin_database
 	drop u_instcod_253
 	egen check=rowtotal(u_instcod*)
 		
-******************************************** NOTE TO ANYONE REPLICATING THIS CODE.  REPLACE ???? WITH THE BEST RANKED SCHOOL 
-******************************************** BE CONSISTENT ACROSS PROGRAMS
-
-	assert check==0 if instcod=="????"
+	assert check==0 if instcod=="`base_instcod'"
 	
 	cap drop check
 end

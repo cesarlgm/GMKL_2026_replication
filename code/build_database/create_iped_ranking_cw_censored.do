@@ -24,8 +24,7 @@
 use "data/output/individual_database_raw", clear
 
 *Manual modification of university names
-replace inst_name=XXXX
-
+rep_iped_ranking_name
 
 
 keep instcod inst_name 

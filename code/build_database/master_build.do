@@ -21,22 +21,22 @@ global SDR_list   $sdr19   $sdr17 $sdr15 $sdr13 $sdr10 $sdr08 $sdr06  $sdr03 ///
 
 
 /*
-TODO: review if I can erase this line
 *===============================================================================
 *LOCATIONS OF DRF FILES
 *===============================================================================
+*/
 
 global DRF_list  $drf17 $drf15 $drf13 $drf10 $drf08 $drf06 $drf03 ///
 				$drf01 $drf99 $drf97 $drf93
 
-*/
+
 *===============================================================================
 *PROCESSING SDR, APPENDING FILES AND RESTRICTING THE SAMPLE
 *===============================================================================
 
 
 *Loading basic regression-related programs used across the code (CLEANED) (DEPENDENCES EXPORTED)
-do "code/build_database/regression_programs_censured.do"
+do "code/build_database/regression_programs.do"
 
 
 *Processing individual waves from the SDR and appending them into a unique dataset
@@ -109,18 +109,18 @@ qui do "code/build_database/clean_ipeds.do"
 *Here I need to filter the database twice to arrive to the right set 
 *of institutions (CLEANED)
 *<1 minute
-qui do "code/build_database/add_institution_dummies_censured.do" temporary
+qui do "code/build_database/add_institution_dummies.do" temporary
 
 
 *I create temporary AKM estimates to limit the sample and get the right
 *connected set (CLEANED)
 *3.4 minutes
-qui do "code/build_database/create_institution_estimates_censured" temporary
+qui do "code/build_database/create_institution_estimates" temporary
 di "Created individual database, second", as result		
  
 
 *<1 minute (EXPORTED)
-qui do "code/build_database/create_regression_database_censured.do" temporary
+qui do "code/build_database/create_regression_database.do" temporary
 	
 *Once I have these estimates, I go back to invidual level data and limit the sample.
 *Then I estimate them a final time. (EXPORTED)
@@ -205,10 +205,6 @@ di "Starting variance correction. This can take up to 2 hours. DO NOT CLOSE THE 
 	
 	rscript using "code/build_database/correct_variances_execute.R" //CLEANED
 }
-
-*Creating simulation of compensating differentials (LIKELY DEPRECATED)
-*do "code/build_database/create_cwd_estimates.do"
-
 
 
 di "Finished building do file", as result

@@ -34,6 +34,9 @@ cap program drop prepare_field_file
 program define prepare_field_file, rclass
 	syntax, ranking(str) [NOsen]
 
+	ret_base_instcod
+	local base_instcod `r(base_code)'
+
 	if "`nosen'"!="" {
 		local stub _nosen
 	}
@@ -142,7 +145,7 @@ program define prepare_field_file, rclass
 	egen check=rowtotal(u_instcod*)
 	
 	*** NOTE TO DUPLICATORS: REPLACE ???? WITH THE SAME UNIVERSITY NUMBER THAT ??? REFERS TO IN OUR OTHER PROGRAMS, SO THE BASE CATEGORY=0 IS CONSISTENT 
-	assert check==0 if instcod=="????"
+	assert check==0 if instcod=="`base_instcod'"
 	
 	cap drop check
 	
@@ -239,7 +242,7 @@ program define prepare_field_file, rclass
 	
 	merge 1:1 instcod using "data/output/institution_level_database_`d_type'"	
 		*** NOTE TO DUPLICATORS: REPLACE ???? WITH THE SAME UNIVERSITY NUMBER THAT ??? REFERS TO IN OUR OTHER PROGRAMS, SO THE BASE CATEGORY=0 IS CONSISTENT 
-	keep if _merge==3 | instcod=="????"
+	keep if _merge==3 | instcod=="`base_instcod'"
 	cap drop _merge
 	
 	merge 1:1 instcod using `n_people', keep(3) nogen 
@@ -257,8 +260,8 @@ program define prepare_field_file, rclass
 	return scalar `ranking'_unranked=`r(unique)'
 
 		*** NOTE TO DUPLICATORS: REPLACE ???? WITH THE SAME UNIVERSITY NUMBER THAT ??? REFERS TO IN OUR OTHER PROGRAMS, SO THE BASE CATEGORY=0 IS CONSISTENT 
-	replace field=0 if instcod=="????"
-	replace se_field=0 if instcod=="????"
+	replace field=0 if instcod=="`base_instcod'"
+	replace se_field=0 if instcod=="`base_instcod'"
 	
 	merge 1:1 instcod using "data/temporary/USNWR_`ranking'_rankings_clean"
 	

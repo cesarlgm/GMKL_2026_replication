@@ -13,11 +13,10 @@
 *   Input: data/temporary/non_switcher_file.dta
 *          data/temporary/non_switcher_file_part2.dta
 *   Output: data/temporary/non_switcher_file_fixed.dta
-					
+
 
 *===============================================================================
 */
-
 
 
 
@@ -26,20 +25,19 @@ use "data/temporary/non_switcher_file", clear
 append using "data/temporary/non_switcher_file_part2"
 
 drop if inlist(instcod,"999999")
-drop if inlist(inst_name,"")	
+drop if inlist(inst_name,"")
 
 egen in_us=min(emus), by(panelid acad_spell_id)
 drop if !in_us
-***********************************************************************************************************************************
-replace instcod=XXXX if instcod==XXXX
 
+do_nonswitch_rep
 
 *Dropping puerto rico and the territories
 drop if emst>=66&!missing(emst)
 
 
 do "code/build_database/update_observation_type.do"
-	
+
 do "code/build_database/update_acad_spell_id.do"
 
 *Recomputing spell level variables.

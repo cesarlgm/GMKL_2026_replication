@@ -6,21 +6,21 @@
 *			Shulamit Kahn (skahn@bu.edu)
 *			Kevin Lang (lang@bu.edu) 
 *
-*Description: creates LaTeX tables analyzing the relationship between institution premiums and endowments using both two-step and one-step AKM estimates
+*Description: creates main results tables analyzing the relationship between institution premiums/salary and university rankings using both two-step and one-step AKM estimates
 *
 *Input files:
-*	- results/regressions/institution_fe_*_clean[_nosen]
-*	- results/regressions/one_step_endowment_[1-3]_*[_nosen]
+*	- results/regressions/institution_fe_[1-6]_*[_nosen]
+*	- results/regressions/one_step_[1-3]_*[_nosen]
 *
 *Output files:
-*	- results/tables/table_premiums_endowment_*[_nosen/_mixed].tex
+*	- results/tables/table_premiums_rankings_*[_nosen/_mixed].tex
 *===============================================================================
 */
 
-
+*This program just relabels the variables for the regressions
 cap program drop label_regvars
 program define label_regvars 
-	*Relabelling variables to make the table prettier
+
 	local texspace="\hspace{3mm}"
 	
 	label define 	new_type 		1 "`texspace'Research university" 2 "`texspace'College", modify
@@ -36,13 +36,14 @@ program define label_regvars
 	label define ug_only 1 "`texspace'Undergrad only", modify
 end 
 
-
-*This program creates the table relating premiums/salary to endowments 
-cap program drop create_endo_tab
-program define create_endo_tab
+*This program creates the main table (raw/clean)
+cap program drop create_main_tab
+program define create_main_tab
 	syntax, sample(str) [ttype(str)]
+	
+	ret_base_instcod
+	local base_instcod `r(base_code)'
 
-		
 	*Setting the type of specification of be used
 	*stub gives the file name extension
 	*fe_stub gives the file name extension for the two-step FE
@@ -54,7 +55,7 @@ program define create_endo_tab
 		local y_var inst_fe
 		local se_var se_inst_fe
 		local timevar time_current_job_f
-		local coeflab time_current_job_f  "Time in current job"
+		local coeflab coeflabel(time_current_job_f  "Time in current job" )
 	}
 	else if "`ttype'"=="nosen" {
 		local stub _nosen
@@ -72,26 +73,24 @@ program define create_endo_tab
 		local os_stub
 		local stub _mixed
 		local timevar time_current_job_f
-		local coeflab time_current_job_f  "Time in current job"
+		local coeflab coeflabel(time_current_job_f  "Time in current job" )
 	}
-	
 	
 	
 	if "`sample'"=="raw" {
 		local title_stub "(including salary outliers)"
 	}
 	
+	
+	*Reading the dataset
 	use "data/output/institution_level_database_`sample'", clear
-******************************************** NOTE TO ANYONE REPLICATING THIS CODE.  REPLACE ???? WITH THE BEST RANKED SCHOOL 
-******************************************** BE CONSISTENT ACROSS PROGRAMS
-	
-	replace inst_fe=0 if instcod=="????"
-	replace inst_fe_trim=0 if instcod=="????"
-	replace inst_fe_nosen=0 if instcod=="????"
-	
-	replace se_inst_fe=0 if instcod=="????"
-	replace se_inst_fe_nosen=0 if instcod=="????"
 
+	replace inst_fe=0 if instcod=="`base_instcod'"
+	replace inst_fe_nosen=0 if instcod=="`base_instcod'"
+	replace inst_fe_trim=0 if instcod=="`base_instcod'"
+	
+	replace se_inst_fe=0 if instcod=="`base_instcod'"
+	replace se_inst_fe_nosen=0 if instcod=="`base_instcod'"
 
 	merge 1:1 instcod using "data/additional_processing/final_institution_list_medical", keep(1 3)  nogen
 
@@ -102,50 +101,83 @@ program define create_endo_tab
 	
 	eststo clear 
 	
-	*Regression with no additional controls
-	local base_spec  l_r_endowment_per_student ib3.institution_type 
+	
+	*Baseline regressors
+	local base_spec  ib3.institution_type#c.l_inst_ranking_p ib3.institution_type 
 
-	*Dummies of offering undergrad degree only, private/public university
+	*Specification with all controls
 	qui wregress `y_var' `base_spec'  ///
 		ib3.new_locale l_enrollment_total_m l_r_endowment_per_student ///
 		l_faculty_per_student i.ug_only i.control, ///
 		se(`se_var') stub(m6)
 		
 	estimates restore m6ss
-		
+	
 	cap drop in_sample
 	generate in_sample=e(sample)
 
-
-	*Baseline
+	*No controls
 	qui wregress `y_var' `base_spec' if in_sample, ///
 		se(`se_var') stub(m1)
-		
-
-	*Location
+	
+	*add location
 	qui wregress `y_var' `base_spec'  ///
 		ib3.new_locale if in_sample, ///
 		se(`se_var') stub(m2)
 
 		
-	*Enrollment
+	*add enrollment and university type
 	qui wregress `y_var' `base_spec' ///
 		ib3.new_locale   l_enrollment_total_m ///
 		 i.ug_only i.control  if in_sample, ///
 		se(`se_var') stub(m3)
 		
+	save "data/output/institution_level_database_`database'", replace
+	
 	*===============================================================================	
-	*ONE STEP ESTIMATES
+	*CREATING THE DATASET FOR COMPUTING THE CORRELATION COMPUTING CORRELATION
 	*===============================================================================
 	
 	use panelid instcod using "data/output/final_database_`sample'_with_dummies.dta", clear
 	
+	*For the mixed specification I read the FE without seniority
 	merge m:1 panelid using "data/additional_processing/indiv_fe_estimates_`sample'`fe_stub'.dta", nogen
 	
 	merge m:1 instcod using "data/output/institution_level_database_`sample'", nogen
 	
+
+	*===============================================================================	
+	*COMPUTATION OF F-TESTS AND CORRELATIONS
+	*===============================================================================
 	forvalues j=1/3 {
 		estimates restore m`j'ss
+		
+		test  1.institution_type 1.institution_type#l_inst_ranking_p 
+		
+		estadd scalar	uni_F=r(F)
+		estadd scalar 	uni_p=r(p)
+	
+	
+	
+		estimates restore m`j'ss
+		test  2.institution_type 2.institution_type#l_inst_ranking_p 
+		
+		estadd scalar	coll_F=r(F)
+		estadd scalar 	coll_p=r(p)
+		
+		eststo m`j'ss
+		
+		estimates restore m`j'ss
+		test 1.institution_type#l_inst_ranking_p 2.institution_type#l_inst_ranking_p
+
+		estadd scalar 	rank_F=r(F)
+		estadd scalar 	rank_p=r(p)
+		
+		estimates restore m`j'ss
+		test  1.institution_type 1.institution_type#l_inst_ranking_p  2.institution_type 2.institution_type#l_inst_ranking_p 
+
+		estadd scalar 	all_F=r(F)
+		estadd scalar 	all_p=r(p)
 		
 		corr indiv_fe l_inst_ranking_p if institution_type==1
 
@@ -158,57 +190,56 @@ program define create_endo_tab
 	
 	*Reading one step estimates
 	{
-		forvalues j=1/3{ 
-			estimates use "results/regressions/one_step_endowment_`j'_`sample'`os_stub'"
+		forvalues j=1/5{ 
+			di "Source OS: one_step_`j'_`sample'`os_stub'"
+			estimates use "results/regressions/one_step_`j'_`sample'`os_stub'"
 					
 			eststo os`j'
 		}
 	}
 	
-	
-	
 	*Writing tex tables
 	{
-		local table_name "results/tables/table_premiums_endowment_`sample'`stub'.tex"
-		local table_title "Does endowment increase institution premiums? `title_stub'"
-		local table_key "tab:premiums_endo_`sample'"
+		local table_name "results/tables/table_premiums_rankings_`sample'`stub'.tex"
+		local table_title "Do rankings increase institution premiums? `title_stub'"
+		local table_key "tab:premiums_main_`sample'"
 		local n_cols	6
 		local exhead "&\multicolumn{3}{c}{\scshape Two-step estimates}&\multicolumn{3}{c}{\scshape One-step estimates}\\ \cmidrule(lr){2-4} \cmidrule(lr){5-7}"
 		local table_notes "ADD NOTES"
 		local coltitles
-		local models m1ss m2ss m3ss os1 os2 os3
+		local models m1ss m2ss m3ss os1 os2 os5
 		
-		local keepvar  *locale*  *control *ug_*   *enrollment* `timevar'
+		local keepvar  *locale*  *control *ug_*   *enrollment*
+		
 		
 		textablehead using `table_name', ncols(`n_cols') title(`table_title') ///
 			coltitles(`coltitles')  exhead(`exhead') adjust(1) ct(\scshape) 
 	
 		leanesttab `models' using `table_name', format(4) ///
-		keep(l_r_endowment_per_student *institution_type `keepvar')  ///
+		keep(*institution_type `keepvar' *institution_type#c.l_* `timevar') ///
 		nomtitles nostar nobase noomit ///
-		coeflabel(`coeflab' l_r_endowment_per_student "ln(endowment per student)" ) ///
-		stats(N r2, ///
-			label( "\midrule Observations" "$ R^2$") fmt( %9.0fc  %9.3fc  )) ///
+		`coeflab' ///
+		stats(f_title rank_F rank_p  t_title all_F all_p c_title rho_uni rho_coll   N r2, ///
+			label("Joint significance of 2 rank variables" "${texspace} F statistic" "${texspace} p-value"  "Joint significance of university type and ranking variables" "${texspace} F statistic" "${texspace} p-value"  "Correlation between individual fixed effects and ln(rankings)" "${texspace}Universities" "${texspace}Colleges" "\midrule Observations" "$ R^2$") fmt(%9.3fc  %9.3fc  %9.3fc %9.3fc  %9.3fc  %9.3fc %9.3fc  %9.3fc %9.3fc  %9.0fc  %9.3fc  )) ///
 			refcat(1.institution_type "\textit{Institution type (omitted=unranked)}" ///
+			1.institution_type#c.l_inst_ranking_p "\textit{Institution type $ \times $ ln of ranking}" ///
 			1.new_locale "\textit{Institution characteristics}", nolabel) append 
 	
 		textablefoot using `table_name', notes(`table_notes') nodate 
 	}
 end 
 
-create_endo_tab, sample(raw)
-
-create_endo_tab, sample(clean)
 
 
+create_main_tab, sample(raw)
 
-create_endo_tab, sample(raw) ttype(nosen)
+create_main_tab, sample(clean)
 
-create_endo_tab, sample(clean) ttype(nosen)
+create_main_tab, sample(raw) ttype(nosen)
 
+create_main_tab, sample(clean) ttype(nosen)
 
-*Two-step: no seniority
-*One-step: seniority
-create_endo_tab, sample(raw) ttype(mixed)
+create_main_tab, sample(raw) ttype(mixed)
 
-create_endo_tab, sample(clean) ttype(mixed)
+create_main_tab, sample(clean) ttype(mixed)
+
