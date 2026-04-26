@@ -37,6 +37,9 @@ cap program drop cr_t_matrix
 program define cr_t_matrix
 	syntax, type(str) n_quant(str) sample(str)
 	
+	ret_base_instcod
+	local base_instcod `r(base_code)'
+
 	local database="clean"
 
 	
@@ -47,10 +50,10 @@ program define cr_t_matrix
 ******************************************** NOTE TO ANYONE REPLICATING THIS CODE.  REPLACE ???? WITH THE BEST RANKED SCHOOL 
 ******************************************** BE CONSISTENT ACROSS PROGRAMS
 
-			replace inst_fe=0 if instcod=="????"
-			replace inst_fe_trim=0 if instcod=="????"
+			replace inst_fe=0 if instcod=="`base_instcod'"
+			replace inst_fe_trim=0 if instcod=="`base_instcod'"
 			
-			replace se_inst_fe=0 if instcod=="????"
+			replace se_inst_fe=0 if instcod=="`base_instcod'"
 
 			merge 1:1 instcod using "data/additional_processing/final_institution_list_medical", keep(1 3)  nogen
 

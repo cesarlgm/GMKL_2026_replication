@@ -29,9 +29,7 @@ local base_instcod `r(base_instcod)'
 
 *I execute this chunk of code if this is the first pass at estimation
 if "`database_type'"=="temporary" {
-	local ?????
-	local ?????
-
+	
 	foreach d_type in raw clean {
 	use "data/output/individual_database_`d_type'", clear
 
@@ -74,8 +72,6 @@ if "`database_type'"=="temporary" {
 }
 else {
 	*Else I just read the dummies and rewrite the institution cross walk
-	local ????
-	local ????
 
 	foreach d_type in raw  clean {
 		use "data/output/individual_database_`d_type'", clear

@@ -22,6 +22,8 @@
 
 local source  "additional_processing"
 
+ret_base_instcod
+local base_instcod `r(base_code)'
  
 foreach database in  clean {
 	use  "data/`source'/dummy_estimates_file_`database'", clear 
@@ -29,7 +31,7 @@ foreach database in  clean {
 	replace inst_name="univ southern ca san diego" if instcod=="124821"
 	replace inst_name="univ southern ca sacramento" if instcod=="124742"
 	
-	replace inst_name="harvard university" if instcod=="166027"
+	replace inst_name="harvard university" if instcod=="`base_instcod'"
 
 	order instcod inst_name, first
 
@@ -41,10 +43,10 @@ foreach database in  clean {
 	*Now I add the cleaned iped database
 	merge 1:1 instcod using "data/output/clean_ipeds" ,nogen keep(1 2 3)
 	
-	replace inst_name="harvard university" if instcod=="166027"
+	replace inst_name="harvard university" if instcod=="`base_instcod'"
 	
 	****  NOTE TO PEOPLE REPLICATING.  REPLACE ??? WITH THE CODE OF THE BEST RANKED UNIVERSITY
-	drop if missing(all_clust)&instcod!="????"
+	drop if missing(all_clust)&instcod!="`base_instcod'"
 
 
 	*FINAL CLEANING OF INSTITUTION VARIABLES

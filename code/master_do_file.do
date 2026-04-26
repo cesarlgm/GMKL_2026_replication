@@ -25,8 +25,8 @@ version 17
 */
 
 //# Set the appropriate working directory and R library path
-cd	"K:\Research\Kahn_BU\AKM_SDR"
-global R_library "\\\\de4.norc.org/NCSES/Home/marin-cesar/Documents/R/win-library/4.1"
+cd	"C:\Users\thecs\Dropbox\1_boston_university\8-Research Assistantship\AKM_SDR\replication_package"
+global R_library "\\\\de4.norc.org/NCSES/Home/kahn_shulamit/Documents/R/win-library/4.0"
 
 
 global run_kss "yes"		//"yes" or "no" - whether to run the KSS corrections or not
@@ -73,7 +73,12 @@ rscript using "code/install_R_packages.R", ///
 *EXECUTION OF THE ANALYSIS
 *===============================================================================
 */
-	
+
+//#This program is not included in the replication package due to NCSES disclosure rules.
+*Load censoring programs
+do "code/censoring_programs.do"
+
+
 *Clean the databse and create the AKM regressions
 *Execution time: approx 3.2 hours
 do "code/build_database/master_build.do"  

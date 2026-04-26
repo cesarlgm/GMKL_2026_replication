@@ -13,7 +13,7 @@
 *	- data/temporary/file_for_R_regression_collapsed_*.csv
 *	- results/tables/corr_net_field_uncollapsed.csv
 *	- results/tables/corr_net_field_collapsed.csv
-*	- results/tables/*corrected_variances_*.csv
+*	- results/tables/ *corrected_variances_*.csv
 *	- results/tables/collapsed_*corrected_variances_*.csv
 *
 *Output files:
@@ -25,6 +25,11 @@ cap program drop cr_variance_decomp
 program define cr_variance_decomp
 	syntax, database(str) [NOsen]
 	
+	if "`nosen'"!="" {
+		local model _nosen
+	}
+	
+
 	use "data/output/final_database_`database'_with_dummies.dta", clear
 
 	summ l_r_salary, d
@@ -38,14 +43,14 @@ program define cr_variance_decomp
 
 	local v_salary_c: display %9.3fc `r(Var)'
 
-	import delimited "results\tables\corr_net_field_uncollapsed.csv", clear 
+	import delimited "results\tables\corr_net_field_uncollapsed`model'.csv", clear 
 
 	local format %9.3fc
 	summ corr  
 	local u_net_corr: display `format' `r(mean)'
 
 	
-	import delimited "results\tables\corr_net_field_collapsed.csv", clear 
+	import delimited "results\tables\corr_net_field_collapsed`model'.csv", clear 
 
 	local format %9.3fc
 	summ c_corr  
@@ -54,7 +59,7 @@ program define cr_variance_decomp
 
 
 
-	import delimited "results\tables\uncorrected_variances_`database'.csv", clear 
+	import delimited "results\tables\uncorrected_variances_`database'`model'.csv", clear 
 
 	local format %9.3fc
 	summ instcod if _n==1
@@ -68,7 +73,7 @@ program define cr_variance_decomp
 	local corr_u:  display `format' `corr_u'
 
 
-	import delimited "results\tables\corrected_variances_`database'.csv", clear 
+	import delimited "results\tables\corrected_variances_`database'`model'.csv", clear 
 
 	local format %9.3fc
 	summ instcod if _n==1
@@ -81,7 +86,7 @@ program define cr_variance_decomp
 	local corr_u_c=`r(mean)'/sqrt(`uni_u_c'*`indiv_u_c')
 	local corr_u_c:  display `format' `corr_u_c'
 
-	import delimited "results\tables\collapsed_uncorrected_variances_`database'.csv", clear 
+	import delimited "results\tables\collapsed_uncorrected_variances_`database'`model'.csv", clear 
 
 	local format %9.3fc
 	summ instcod if _n==1
@@ -95,7 +100,7 @@ program define cr_variance_decomp
 	local corr_c:  display `format' `corr_c'
 
 
-	import delimited "results\tables\collapsed_corrected_variances_`database'.csv", clear 
+	import delimited "results\tables\collapsed_corrected_variances_`database'`model'.csv", clear 
 
 	local format %9.3fc
 	summ instcod if _n==1
@@ -113,8 +118,8 @@ program define cr_variance_decomp
 	}
 
 	{
-		local table_name   "results/tables/table_variance_decomp_`database'.tex"
-		local table_key		"tab:table_variance_`database'"
+		local table_name   "results/tables/table_variance_decomp_`database'`model'.tex"
+		local table_key		"tab:table_variance_`database'`model'"
 		local table_title	"Fixed effect variance estimates in AKM model `stub'"
 		local coltitles		`""Uncorrected""Corrected \\ Andrews et al method""'
 		local n_cols		2
@@ -140,6 +145,6 @@ program define cr_variance_decomp
 	}	
 end
 
-cr_variance_decomp, database(clean)
+cr_variance_decomp, database(clean) nosen
 
-cr_variance_decomp, database(raw)
+cr_variance_decomp, database(raw) nosen

@@ -6,9 +6,9 @@ Track whether each file has been reviewed/modified for the resubmission.
 
 ## Root (`code/`)
 
-- [ ] `install_R_packages.R`
+- [X] `install_R_packages.R`
 - [X] `master_do_file.do`
-- [ ] `R_setup.R`
+- [X] `R_setup.R`
 - [ ] `R_working_directories.R`
 - [X] `stata_setup.do`
 
@@ -122,15 +122,15 @@ do`
 - [X] `create_table_one_step_time_varying.do`
 - [X] `create_table_premiums_endowment_censored.do`
 - [X] `create_table_premiums_rankings_censored.do`
-- [ ] `create_table_ranking_imputation_censored.do`
-- [ ] `create_table_summary_stats_censored.do`
-- [ ] `create_table_tenured_censored.do`
-- [ ] `create_table_transition_censored.do`
-- [ ] `create_table_transition_coworker_censored.do`
-- [ ] `create_table_variance_decomp.do`
-- [ ] `create_test_wilcoxon.do`
-- [ ] `get_n_for_profit_schools.do`
-- [ ] `master_tables_and_figures.do`
-- [ ] `output_number_inconsistent_movers.do`
-- [ ] `output_number_leaves.do`
-- [ ] `regression_var_relabel.do`
+- [X] `create_table_ranking_imputation_censored.do`
+- [X] `create_table_summary_stats_censored.do`
+- [X] `create_table_tenured_censored.do`
+- [X] `create_table_transition_censored.do`
+- [X] `create_table_transition_coworker_censored.do`
+- [X] `create_table_variance_decomp.do`
+- [X] `create_test_wilcoxon.do`
+- [X] `get_n_for_profit_schools.do`
+- [X] `master_tables_and_figures.do`
+- [X] `output_number_inconsistent_movers.do`
+- [X] `output_number_leaves.do`
+- [X] `regression_var_relabel.do`

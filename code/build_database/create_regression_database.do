@@ -232,8 +232,9 @@ foreach database in raw   clean {
 	*IMPUTE RANKINGS
 	do "code/build_database/impute_rankings"
 
-
-	drop if missing(inst_fe)&instcod!=????
+	ret_base_instcod
+	local base_instcod=`r(base_code)'
+	drop if missing(inst_fe)&instcod!="`base_instcod'"
 
 	cap drop inst_ranking
 
