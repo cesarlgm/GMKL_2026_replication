@@ -4,12 +4,13 @@
 *===============================================================================
 *Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
 *			Shulamit Kahn (skahn@bu.edu)
-*			Kevin Lang (lang@bu.edu) 
+*			Kevin Lang (lang@bu.edu)
 *
-*Description: outputs the number of leave episodes for reporting in the paper text, counting faculty with proper leave spells from academic employment
+*Description: counts the number of proper leave episodes in the raw leave data
+*	and writes the count to a LaTeX snippet for inline citation in the paper.
 *
 *Input files:
-*	- data/raw/leave_check_v4_renamed.dta
+*	- data/raw/leave_check_v4_processed.dta
 *
 *Output files:
 *	- results/text/n_leaves.tex

@@ -1,27 +1,42 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-*Authors: 	César Garro-Marín (garromar@bu.edu)
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
 *			Shulamit Kahn (skahn@bu.edu)
-*			Kevin Lang (lang@bu.edu) 
+*			Kevin Lang (lang@bu.edu)
 *
-*Description: creates comprehensive tables and figures with field-specific results 
-*for biological sciences and engineering PhDs, including AKM estimations by field, institution rankings analysis, and binscatter plots
+*Description: Estimates field-specific AKM models for biological sciences and
+*engineering Ph.D. holders, then runs second-stage FGLS regressions of institution
+*fixed effects on THE and USNWR field rankings and institution characteristics.
+*Produces regression tables, a condensed cross-field comparison table, binscatter
+*plots of institution FEs against rankings, and a summary statistics table for
+*the two field subsamples.
 *
 *Input files:
 *	- data/output/final_database_clean_with_dummies.dta
-*	- data/output/institution_level_database_clean
+*	- data/output/institution_level_database_clean.dta
 *	- data/additional_processing/indiv_fe_estimates_clean.dta
-*	- data/temporary/USNWR_bio_rankings_clean
-*	- data/temporary/USNWR_eng_rankings_clean
+*	- data/temporary/USNWR_bio_rankings_clean.dta
+*	- data/temporary/USNWR_eng_rankings_clean.dta
 *
 *Output files:
-*	- results/regressions/field_clean (and field_clean_nosen)
-*	- results/tables/table_field_specific_results_bio.tex/csv
-*	- results/tables/table_field_specific_results_eng.tex/csv  
+*	- results/regressions/field_clean.ster
+*	- results/regressions/field_clean_nosen.ster
+*	- results/tables/table_field_specific_results_bio.tex
+*	- results/tables/table_field_specific_results_bio.csv
+*	- results/tables/table_field_specific_results_bio_nosen.tex
+*	- results/tables/table_field_specific_results_bio_nosen.csv
+*	- results/tables/table_field_specific_results_eng.tex
+*	- results/tables/table_field_specific_results_eng.csv
+*	- results/tables/table_field_specific_results_eng_nosen.tex
+*	- results/tables/table_field_specific_results_eng_nosen.csv
 *	- results/tables/table_field_specific_results_condensed.tex
-*	- results/figures/binscatter_uw_field_*.png
+*	- results/tables/table_field_specific_results_condensed_nosen.tex
+*	- results/figures/binscatter_uw_field_all_bio.png
+*	- results/figures/binscatter_uw_field_bio.png
+*	- results/figures/binscatter_uw_field_all_eng.png
+*	- results/figures/binscatter_uw_field_eng.png
 *	- results/tables/table_field_summstats.tex
 *===============================================================================
 */

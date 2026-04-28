@@ -1,21 +1,23 @@
-
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-*Authors: 	César Garro-Marín (garromar@bu.edu)
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
 *			Shulamit Kahn (skahn@bu.edu)
-*			Kevin Lang (lang@bu.edu) 
+*			Kevin Lang (lang@bu.edu)
 *
-*Description: creates one-step AKM estimates comparing current versus origin institution effects, controlling for both current and previous institution characteristics to analyze faculty mobility patterns
+*Description: Estimates one-step regressions of log real salary on both current
+*and origin institution characteristics (type, log ranking, location, size, and
+*control status), progressively adding destination and origin controls. Runs
+*separately on all observations and on the first year of each spell. Produces a
+*LaTeX table comparing the current-only and current-plus-origin specifications.
 *
 *Input files:
 *	- data/output/final_database_clean_with_dummies.dta
-*	- data/output/institution_level_database_clean
+*	- data/output/institution_level_database_clean.dta
 *
 *Output files:
 *	- results/tables/table_p_vineay_results.tex
-*	- results/tables/table_p_vineay_results.csv
 *===============================================================================
 */
 

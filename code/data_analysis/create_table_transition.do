@@ -1,34 +1,30 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-
-*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*				Shulamit Kahn (skahn@bu.edu)
-*				Kevin Lang (lang@bu.edu)
-
-*	Description: 	Defines and calls the cr_t_matrix program, which produces
-*					LaTeX transition matrix tables showing faculty mobility between
-*					institution ranking quantiles. Generates six tables crossing
-*					type (salary change, transition probability, or headcount) with
-*					sample (all faculty or tenured only). This is the censored
-*					replication version: the best-ranked institution identifier
-*					is replaced with ???? throughout; replicators must substitute
-*					the correct institution code before running.
-
-*   Input: 	data/output/institution_level_database_clean.dta
-*			data/output/final_database_clean_with_dummies.dta
-*			data/output/final_database_clean_tenured_only.dta
-*			data/additional_processing/final_institution_list_medical.dta
-
-*   Output: 	results/tables/table_transition_salary_all.tex
-*				results/tables/table_transition_salary_tenured.tex
-*				results/tables/table_transition_probability_all.tex
-*				results/tables/table_transition_probability_tenured.tex
-*				results/tables/table_transition_people_all.tex
-*				results/tables/table_transition_people_tenured.tex
-
-
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu)
+*
+*Description: Produces LaTeX transition matrix tables showing faculty mobility
+*across institution ranking quintiles (universities) and quinties (colleges).
+*Generates six tables crossing outcome type (mean salary change, transition
+*probability, or headcount) with sample (all faculty or tenured only). Cells
+*with five or fewer people are suppressed as N.D. for confidentiality.
+*
+*Input files:
+*	- data/output/institution_level_database_clean.dta
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/final_database_clean_tenured_only.dta
+*	- data/additional_processing/final_institution_list_medical.dta
+*
+*Output files:
+*	- results/tables/table_transition_salary_all.tex
+*	- results/tables/table_transition_salary_tenured.tex
+*	- results/tables/table_transition_probability_all.tex
+*	- results/tables/table_transition_probability_tenured.tex
+*	- results/tables/table_transition_people_all.tex
+*	- results/tables/table_transition_people_tenured.tex
 *===============================================================================
 */
 

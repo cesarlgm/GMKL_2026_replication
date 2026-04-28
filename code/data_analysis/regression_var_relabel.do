@@ -1,22 +1,21 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-
-*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*				Shulamit Kahn (skahn@bu.edu)
-*				Kevin Lang (lang@bu.edu)
-
-*	Description: 	Utility snippet that applies LaTeX-friendly variable labels
-*					and value labels to in-memory variables for display in
-*					regression output tables. Sets the $texspace global for
-*					consistent LaTeX spacing and relabels institution type,
-*					control status, locale, and key continuous variables.
-
-*   Input: 	None (operates on in-memory dataset labels)
-*   Output: 	None (modifies in-memory variable/value labels only)
-
-
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu)
+*
+*Description: utility snippet that applies LaTeX-friendly variable and value
+*	labels to the in-memory dataset for consistent display in regression output
+*	tables. Sets the $texspace global and relabels institution type, control
+*	status, locale, and key continuous variables.
+*
+*Input files:
+*	- (none — operates on in-memory dataset labels only)
+*
+*Output files:
+*	- (none — modifies in-memory variable/value labels only)
 *===============================================================================
 */
 global texspace \hspace{3mm}

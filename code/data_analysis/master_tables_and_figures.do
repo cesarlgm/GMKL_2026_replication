@@ -73,9 +73,9 @@ do "code/data_analysis/create_figure_binscatter_additional.do"
 *Figure: event studies around the move
 do "code/data_analysis/create_figure_event_studies.do"
 
-/*
+
 *===============================================================================
-*Compute additional numbers written on the text
+*Compute additional numbers written in the text
 *===============================================================================
 do "code/data_analysis/output_number_leaves.do"
 

@@ -8,13 +8,12 @@
 *				Shulamit Kahn (skahn@bu.edu)
 *				Kevin Lang (lang@bu.edu)
 
-*	Description: 	restricts the sample we use for the work history
-
-*   Input: 	data/temporary/non_switcher_file.dta.dta
-*			data/temporary/non_switcher_file_part2.data
-
-*   Output: data/temporary/non_switcher_file_fixed.dta
-					
+*	Description: 	Constructs academic employment spell IDs for the full sample,
+*					applies initial rounds of starting-date and institution-code
+*					cleaning, and excludes non-US and permanently
+*					unknown-institution spells. Splits the output into a
+*					non-switcher file (single academic spell) and a switcher
+*					file (two or more spells).
 
 *===============================================================================
 */

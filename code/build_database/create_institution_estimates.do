@@ -14,11 +14,10 @@
 *          data/temporary/institution_dummy_crosswalk_*.dta or data/additional_processing/institution_dummy_crosswalk_*.dta
 *   Output: data/temporary/dummy_estimates_file_*.dta or data/additional_processing/dummy_estimates_file_*.dta
 *           data/temporary/indiv_fe_estimates_*.dta or data/additional_processing/indiv_fe_estimates_*.dta
-*           results/regressions/*_*.ster (regression estimates)
+*           results/regressions/ *_*.ster (regression estimates)
 
 
 *===============================================================================
-*/
 */
 
 local source `1'

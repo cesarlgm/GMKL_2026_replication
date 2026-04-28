@@ -4,16 +4,19 @@
 *===============================================================================
 *Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
 *			Shulamit Kahn (skahn@bu.edu)
-*			Kevin Lang (lang@bu.edu) 
+*			Kevin Lang (lang@bu.edu)
 *
-*Description: analyzes the number and distribution of for-profit schools in the sample by merging IPEDS sector information with institution-level database
+*Description: counts and tabulates for-profit institutions in the analysis sample
+*	by merging IPEDS sector classifications onto the institution-level database
+*	and producing a frequency table by sector code. Results are displayed in the
+*	console for reporting in the paper text.
 *
 *Input files:
-*	- data/raw/IPEDS_v2
+*	- data/raw/IPEDS_v2.dta
 *	- data/output/institution_level_database_clean.dta
 *
 *Output files:
-*	- (Summary table displayed in console)
+*	- (none — tabulation displayed in console only)
 *===============================================================================
 */
 

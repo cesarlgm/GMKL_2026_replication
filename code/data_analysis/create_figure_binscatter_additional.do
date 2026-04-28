@@ -1,24 +1,27 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-
-*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*				Shulamit Kahn (skahn@bu.edu)
-*				Kevin Lang (lang@bu.edu)
-
-*	Description: 	creates binscatter plots of institution fixed effects vs rankings with alternative weighting schemes
-
-*   Input: data/output/final_database_clean_with_dummies.dta
-*          data/output/institution_level_database_clean.dta
-*          data/additional_processing/final_institution_list_medical.dta
-*          data/output/dummy_estimates_file_clean_grouped.dta
-*   Output: results/figures/figure_binscatter_weighted_movers.png
-*           results/figures/figure_binscatter_grouped.png
-*           results/figures/figure_fe_ranking_wmovers_people_counts.xlsx
-*           results/figures/figure_fe_ranking_grouped_people_counts.xlsx
-					
-
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu)
+*
+*Description: produces supplementary binscatter figures showing institution fixed
+*	effects versus THE rankings using two alternative weighting schemes: (1)
+*	weighted by number of movers per institution, and (2) using grouped AKM
+*	estimates. Also exports person-count data underlying each figure.
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean.dta
+*	- data/additional_processing/final_institution_list_medical.dta
+*	- data/output/dummy_estimates_file_clean_grouped.dta
+*
+*Output files:
+*	- results/figures/figure_binscatter_weighted_movers.png
+*	- results/figures/figure_binscatter_grouped.png
+*	- results/figures/figure_fe_ranking_wmovers_people_counts.xlsx
+*	- results/figures/figure_fe_ranking_grouped_people_counts.xlsx
 *===============================================================================
 */
 

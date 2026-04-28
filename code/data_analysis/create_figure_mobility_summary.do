@@ -1,22 +1,31 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-
-*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*				Shulamit Kahn (skahn@bu.edu)
-*				Kevin Lang (lang@bu.edu)
-
-*	Description: 	creates figures summarizing mobility patterns and salary changes around job moves
-
-*   Input: data/output/final_database_*_with_dummies.dta
-*          data/output/institution_level_database_*.dta
-*   Output: results/figures/figure_hist_l_change_ranking_within*.png
-*           results/figures/figure_binscat_d_salary_vs_d_rankings*.png
-*           results/figures/figure_hist_l_change_ranking_within*_count.csv
-*           results/figures/figure_binscat_d_salary_vs_d_rankings*_count.csv
-					
-
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu)
+*
+*Description: produces figures summarizing faculty job-to-job mobility patterns.
+*	Creates a histogram of changes in log institution ranking percentile for
+*	within-type movers and a binscatter of salary changes against ranking changes,
+*	separately for research universities and colleges. Both figures are produced
+*	for the full sample and the tenured subsample. Also exports CSV files with
+*	person counts underlying each figure.
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean.dta
+*
+*Output files:
+*	- results/figures/figure_hist_l_change_ranking_within.png
+*	- results/figures/figure_hist_l_change_ranking_within_tenured.png
+*	- results/figures/figure_binscat_d_salary_vs_d_rankings.png
+*	- results/figures/figure_binscat_d_salary_vs_d_rankings_tenured.png
+*	- results/figures/figure_hist_l_change_ranking_within_count.csv
+*	- results/figures/figure_hist_l_change_ranking_within_tenured_count.csv
+*	- results/figures/figure_binscat_d_salary_vs_d_rankings_count.csv
+*	- results/figures/figure_binscat_d_salary_vs_d_rankings_tenured_count.csv
 *===============================================================================
 */
 

@@ -4,13 +4,20 @@
 *===============================================================================
 *Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
 *			Shulamit Kahn (skahn@bu.edu)
-*			Kevin Lang (lang@bu.edu) 
+*			Kevin Lang (lang@bu.edu)
 *
-*Description: creates LaTeX table comparing one-step AKM regression results with and without individual fixed effects, including time-varying specifications
+*Description: produces a LaTeX table reporting time-varying covariate coefficients
+*	from one-step AKM specifications. Presents three progressively richer
+*	control sets with individual fixed effects alongside the same specifications
+*	without individual fixed effects, using the trimmed (clean) sample.
 *
 *Input files:
-*	- results/regressions/one_step_[1-3]_clean
-*	- results/regressions/one_step_nofe_[1-3]_clean
+*	- results/regressions/one_step_1_clean.ster
+*	- results/regressions/one_step_2_clean.ster
+*	- results/regressions/one_step_3_clean.ster
+*	- results/regressions/one_step_nofe_1_clean.ster
+*	- results/regressions/one_step_nofe_2_clean.ster
+*	- results/regressions/one_step_nofe_3_clean.ster
 *
 *Output files:
 *	- results/tables/table_one_step_time_varying.tex

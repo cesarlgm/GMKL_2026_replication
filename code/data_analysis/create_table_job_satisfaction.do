@@ -1,20 +1,31 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-*Authors: 	César Garro-Marín (garromar@bu.edu)
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
 *			Shulamit Kahn (skahn@bu.edu)
-*			Kevin Lang (lang@bu.edu) 
+*			Kevin Lang (lang@bu.edu)
 *
-*Description: creates LaTeX tables analyzing the relationship between institution rankings and faculty job satisfaction using both two-step and one-step AKM estimates
+*Description: produces LaTeX tables examining whether institution rankings predict
+*	faculty job satisfaction. Each table presents six specifications (three
+*	progressively richer controls) side by side for the two-step AKM estimates and
+*	one-step estimates. Produced for three variants: baseline, nosen (no seniority
+*	controls), and mixed (nosen FEs with baseline time-varying controls). Two
+*	outcome definitions are used: very satisfied and satisfied.
 *
 *Input files:
-*	- results/regressions/regression_satisfaction_ts[1-3][sat_vsat/sat_sat][_nosen]
-*	- results/regressions/regression_satisfaction_os[1-3][sat_vsat/sat_sat][_nosen]
+*	- results/regressions/regression_satisfaction_ts[1-3]sat_vsat.ster
+*	- results/regressions/regression_satisfaction_ts[1-3]sat_sat.ster
+*	- results/regressions/regression_satisfaction_os[1-3]sat_vsat.ster
+*	- results/regressions/regression_satisfaction_os[1-3]sat_sat.ster
+*	- results/regressions/regression_satisfaction_ts[1-3]sat_vsat_nosen.ster
+*	- results/regressions/regression_satisfaction_ts[1-3]sat_sat_nosen.ster
+*	- results/regressions/regression_satisfaction_os[1-3]sat_vsat_nosen.ster
+*	- results/regressions/regression_satisfaction_os[1-3]sat_sat_nosen.ster
 *
 *Output files:
-*	- results/tables/table_jobsat_rankings_sat_vsat.tex (very satisfied)
-*	- results/tables/table_jobsat_rankings_sat_sat.tex (satisfied)
+*	- results/tables/table_jobsat_rankings_sat_vsat.tex
+*	- results/tables/table_jobsat_rankings_sat_sat.tex
 *	- results/tables/table_jobsat_rankings_sat_vsat_nosen.tex
 *	- results/tables/table_jobsat_rankings_sat_sat_nosen.tex
 *	- results/tables/table_jobsat_rankings_sat_vsat_mixed.tex

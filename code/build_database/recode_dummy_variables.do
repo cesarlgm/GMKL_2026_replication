@@ -1,12 +1,19 @@
-*===============================================================================
-*Project AKM-SDR
-*===============================================================================
 /*
-	Author: 	César Garro-Maín
-	Purpose: 	recodes dummy categorical variables into 0-1 variables fit for 
-				regression analysis
-*/
 *===============================================================================
+* Do Elite Universities Overpay Their Faculty?
+*===============================================================================
+
+*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*				Shulamit Kahn (skahn@bu.edu)
+*				Kevin Lang (lang@bu.edu)
+
+*	Description: 	Recodes string categorical dummy variables (Y/N/M/L/F/D) into
+*					0/1 numeric indicators with extended missing values, preserving
+*					variable labels. Saves a file of recoded dummies and a separate
+*					file of remaining non-dummy variables for further processing.
+
+*===============================================================================
+*/
 
 ds *
 

@@ -1,24 +1,24 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-*Authors: 	César Garro-Marín (garromar@bu.edu)
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
 *			Shulamit Kahn (skahn@bu.edu)
-*			Kevin Lang (lang@bu.edu) 
-* Description: creates comprehensive summary statistics and LaTeX tables for 
-* faculty mobility patterns between institutions, including transition matrices 
-* by ranking terciles, wage change analysis, and Sankey flow charts
+*			Kevin Lang (lang@bu.edu)
+*
+*Description: produces summary statistics and LaTeX tables for faculty
+*	job-to-job mobility patterns. Constructs a transition dataset collapsed to the
+*	move level, then outputs: (1) a table of move characteristics by direction
+*	(more/less/same prestige within type), and (2) a table of institution-level
+*	inflow/outflow statistics. Sankey charts and transition-by-tercile tables are
+*	also defined but currently commented out in the calling section.
 *
 *Input files:
 *	- data/output/final_database_clean_with_dummies.dta
-*	- data/output/institution_level_database_clean
+*	- data/output/institution_level_database_clean.dta
 *
 *Output files:
-*	- results/tables/transition_people_terciles.tex
-*	- results/tables/transition_count_terciles.tex  
-*	- results/tables/transition_wages_terciles.tex
 *	- results/tables/table_transition_summary.tex
-*	- results/tables/table_edge_summary.tex
 *	- results/tables/table_inflow_outflow_summary.tex
 *===============================================================================
 */

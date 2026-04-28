@@ -8,11 +8,11 @@
 *				Shulamit Kahn (skahn@bu.edu)
 *				Kevin Lang (lang@bu.edu)
 
-*	Description: 	restricts the sample we use for the work history
-
-*   Input: data/temporary/file_with_sample_restrictions.dta
-*   Output: data/temporary/switcher_file_fixed.dta
-					
+*	Description: 	Cleans academic employment spells for faculty who changed
+*					institutions. Corrects spell IDs and starting dates, drops
+*					spells at unconnected institutions, applies manual corrections,
+*					flags leave episodes and spell inconsistencies, and outputs
+*					the cleaned switcher file used in subsequent AKM estimation.
 
 *===============================================================================
 */

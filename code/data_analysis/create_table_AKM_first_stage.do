@@ -1,19 +1,25 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-
-*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*				Shulamit Kahn (skahn@bu.edu)
-*				Kevin Lang (lang@bu.edu)
-
-*	Description: 	creates LaTeX table showing first-stage AKM regression results with time-varying covariates
-
-*   Input: results/regressions/all_clust_raw*.ster
-*          results/regressions/all_clust_clean*.ster
-*   Output: results/tables/table_AKM_first_stage*.tex
-					
-
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu)
+*
+*Description: produces a LaTeX table reporting the coefficients on time-varying
+*	individual controls from the AKM first-stage regression. Columns contrast the
+*	full sample against the outlier-trimmed sample. The table is produced twice:
+*	once with tenure-in-job controls and once without (nosen variant).
+*
+*Input files:
+*	- results/regressions/all_clust_raw.ster
+*	- results/regressions/all_clust_clean.ster
+*	- results/regressions/all_clust_raw_nosen.ster
+*	- results/regressions/all_clust_clean_nosen.ster
+*
+*Output files:
+*	- results/tables/table_AKM_first_stage.tex
+*	- results/tables/table_AKM_first_stage_nosen.tex
 *===============================================================================
 */
 

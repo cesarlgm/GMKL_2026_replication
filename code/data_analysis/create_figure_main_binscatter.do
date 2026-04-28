@@ -1,23 +1,30 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-
-*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*				Shulamit Kahn (skahn@bu.edu)
-*				Kevin Lang (lang@bu.edu)
-
-*	Description: 	creates main binscatter plots showing relationship between institution fixed effects/average salaries and rankings
-
-*   Input: data/output/final_database_clean_with_dummies.dta
-*          data/output/institution_level_database_clean.dta
-*          data/additional_processing/final_institution_list_medical.dta
-*   Output: results/figures/figure_fe_ranking*.png
-*           results/figures/figure_salary_ranking.png
-*           results/figures/figure_fe_ranking_people_counts*.xlsx
-*           results/figures/figure_salary_ranking_people_counts.xlsx
-					
-
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu)
+*
+*Description: produces the main paper figures showing the relationship between
+*	institution fixed effects (or average log salaries) and THE rankings,
+*	separately for research universities and colleges. Figure panel A plots
+*	institution FEs against rankings; panel B plots demeaned average log salary.
+*	Both panels are produced with and without the seniority controls. Also exports
+*	Excel files with person counts by institution-type and quantile bin.
+*
+*Input files:
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/output/institution_level_database_clean.dta
+*	- data/additional_processing/final_institution_list_medical.dta
+*
+*Output files:
+*	- results/figures/figure_fe_ranking.png
+*	- results/figures/figure_fe_ranking_nosen.png
+*	- results/figures/figure_salary_ranking.png
+*	- results/figures/figure_fe_ranking_people_counts.xlsx
+*	- results/figures/figure_fe_ranking_people_counts_nosen.xlsx
+*	- results/figures/figure_salary_ranking_people_counts.xlsx
 *===============================================================================
 */
 

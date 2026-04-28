@@ -8,11 +8,10 @@
 *				Shulamit Kahn (skahn@bu.edu)
 *				Kevin Lang (lang@bu.edu)
 
-*	Description: 	restricts the sample we use for the work history
-
-*   Input: data/temporary/cleaned_final_database.dta
-*   Output: data/temporary/file_with_sample_restrictions.dta
-					
+*	Description: 	Restricts the full SDR panel to faculty with at least two
+*					academic tenure-track waves in the US, adds IPEDS institution
+*					codes, and constructs the in_sample_f flag used throughout
+*					the work-history pipeline.
 
 *===============================================================================
 */

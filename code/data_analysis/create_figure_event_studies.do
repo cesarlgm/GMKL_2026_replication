@@ -1,24 +1,28 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-
-*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*				Shulamit Kahn (skahn@bu.edu)
-*				Kevin Lang (lang@bu.edu)
-
-*	Description: 	creates event study figures showing wage patterns around job moves by institution prestige and coworker salary
-
-*   Input: data/output/institution_level_database_*.dta
-*          data/output/final_database_*_with_dummies.dta
-*          data/additional_processing/final_institution_list_medical.dta
-*   Output: results/figures/figure_event_prestige_panel_A_universities.pdf
-*           results/figures/figure_event_prestige_panel_B_colleges.pdf
-*           results/figures/figure_event_coworker.pdf
-*           results/figures/figure_event_prestige_people_counts.xlsx
-*           results/figures/figure_event_coworker_people_counts.xlsx
-					
-
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu)
+*
+*Description: Creates event study figures tracing mean log wages in the periods
+*surrounding a job move. Produces two types of figures: one tracking wages by
+*institution prestige quintile (separately for universities and colleges) and one
+*tracking wages by quintile of coworker leave-out mean salary. Restricts to
+*single-move faculty observed at least one period before and after the move.
+*
+*Input files:
+*	- data/output/institution_level_database_clean.dta
+*	- data/output/final_database_clean_with_dummies.dta
+*	- data/additional_processing/final_institution_list_medical.dta
+*
+*Output files:
+*	- results/figures/figure_event_prestige_panel_A_universities.pdf
+*	- results/figures/figure_event_prestige_panel_B_colleges.pdf
+*	- results/figures/figure_event_coworker.pdf
+*	- results/figures/figure_event_prestige_people_counts.xlsx
+*	- results/figures/figure_event_coworker_people_counts.xlsx
 *===============================================================================
 */
 

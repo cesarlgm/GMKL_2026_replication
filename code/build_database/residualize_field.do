@@ -9,13 +9,9 @@
 *				Shulamit Kahn (skahn@bu.edu)
 *				Kevin Lang (lang@bu.edu)
 
-*	Description: 	computes correlations between individual fixed effects (net of field) and institution fixed effects
-
-*   Input: data/output/final_database_*_with_dummies.dta
-*          data/output/institution_level_database_*.dta
-*          data/additional_processing/indiv_fe_estimates_*.dta
-*   Output: results/tables/corr_net_field_collapsed*.csv
-
+*	Description: 	Computes correlations between individual fixed effects
+*					(residualized on field) and institution fixed effects,
+*					for both raw and clean samples.
 
 *===============================================================================
 */

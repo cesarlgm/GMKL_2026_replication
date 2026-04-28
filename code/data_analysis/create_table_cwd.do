@@ -1,21 +1,34 @@
 /*
 *===============================================================================
-* Do Elite Universities Overpay Their Faculty?
+*Project: Do Elite Universities Overpay Their Faculty?
 *===============================================================================
-
-*	Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
-*				Shulamit Kahn (skahn@bu.edu)
-*				Kevin Lang (lang@bu.edu)
-
-*	Description: 	creates LaTeX table showing compensating wage differentials simulation results
-
-*   Input: results/regressions/cwd_sim_*_nosen.ster
-*          data/output/compensation_diff_file.dta
-*          results/tables/simul_uncorrected_variances_*_nosen.csv
-*          results/tables/simul_corrected_variances_*_nosen.csv
-*   Output: results/tables/table_cwd_results.tex
-					
-
+*Authors: 	César Garro-Marín (cgarrom@ed.ac.uk)
+*			Shulamit Kahn (skahn@bu.edu)
+*			Kevin Lang (lang@bu.edu)
+*
+*Description: produces a LaTeX table reporting compensating wage differential
+*	simulation results across assumed non-salary compensation shares (1%, 3%, 6%,
+*	9%). For each scenario, the table shows the regression-implied ranking
+*	gradient, the total compensation variance, and the corrected and uncorrected
+*	variance of institution fixed effects.
+*
+*Input files:
+*	- results/regressions/cwd_sim_1_nosen.ster
+*	- results/regressions/cwd_sim_3_nosen.ster
+*	- results/regressions/cwd_sim_6_nosen.ster
+*	- results/regressions/cwd_sim_9_nosen.ster
+*	- data/output/compensation_diff_file.dta
+*	- results/tables/simul_uncorrected_variances_1_nosen.csv
+*	- results/tables/simul_uncorrected_variances_3_nosen.csv
+*	- results/tables/simul_uncorrected_variances_6_nosen.csv
+*	- results/tables/simul_uncorrected_variances_9_nosen.csv
+*	- results/tables/simul_corrected_variances_1_nosen.csv
+*	- results/tables/simul_corrected_variances_3_nosen.csv
+*	- results/tables/simul_corrected_variances_6_nosen.csv
+*	- results/tables/simul_corrected_variances_9_nosen.csv
+*
+*Output files:
+*	- results/tables/table_cwd_results.tex
 *===============================================================================
 */
 
