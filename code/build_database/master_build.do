@@ -110,6 +110,9 @@ qui do "code/build_database/create_iped_ranking_cw.do"
 	
 *Cleaning data on university characteristics 
 *<1 minute
+//This line is not required for the code in the server.
+qui do "code/build_database/create_IPEDS_v1.do"
+
 qui do "code/build_database/clean_ipeds.do"
 
 

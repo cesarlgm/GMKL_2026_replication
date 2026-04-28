@@ -47,19 +47,19 @@ The following files are required for the replication. They must all be placed in
 - `cuny_corrections.dta`
 - `drop_schools_renamed.dta`
 - `final_institution_list_medical.dta`
-- `inconsistent_movers_shu.dta`
+- `inconsistent_movers_processed.dta`
 - `leave_check_v4_renamed.dta`
 - `manual_check_v1_processed.dta`
 - `mn_corrections.dta`
-- `modification_list_old_part_shu.dta`
+- `modification_list_old_part_processed.dta`
 - `old_panelid_key.dta`
 - `people_to_check_bug.dta`
 - `people_to_check_medical.dta`
-- `people_to_check_new.dta`
-- `people_to_check_new_proc.dta`
+- `people_to_check_new_cases_corrected.dta`
+- `people_to_check_new_cases_second_pass_corrected.dta`
 - `reintroduced_schools.dta`
-- `switcher_file_coding_mistake.dta`
-- `things to be changed.xlsx`
+- `switcher_file_coding_correction.dta`
+- `2019_code_corrections.xlsx`
 - `inst_labels.dta`
 - `iped_dataset_v1.dta`
 - `osep_to_iped_rev2014.dta`

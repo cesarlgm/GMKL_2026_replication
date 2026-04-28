@@ -1,4 +1,5 @@
 # `/temp/` subdirectories are ignored as they are temporary by design
+.claude/*
 
 *bureaucracy/
 *temporary/

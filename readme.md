@@ -37,12 +37,11 @@ Each folder contans a `readme.md` gives a quick description of the objective and
 
 1. Edit the **working directory** and **R library** path at the top of `code/master_do_file.do`. The lines that must be edited are appropriately indicated at the top of the code.
 2. Edit the **working directory** and default **R package library path** in `code/R_setup.R`. The lines that must be edited are appropriately indicated at the top of the code. 
-3. Run `code/test_R_config.do` to test that the R configuration in Stata works. If everything is
-   okay, the program will display the message "R was configured successfully". 
-4. Run `code/master_do_file.do`.
+3. Run `code/master_do_file.do`.
 
 
-**Estimated runtime:** 4-5 days in the NORC servers.
+**Estimated runtime:** Excluding KSS correction, approximately 2 to 3 hours. With the KSS correction
+it takes 4 to 5 days in the NORC servers.
 
 ### Advice:   
 
@@ -52,7 +51,7 @@ Each folder contans a `readme.md` gives a quick description of the objective and
 - `code/data_analysis/master_tables_and_figures.do`: creates all tables and figures.
 
 `correct_KSS_master.do` is the most compuation- and time-intensive part of the code. It can take up
-to 4 four days. The results from this correction are just cited in the text and are not required for
+to 5 four days. The results from this correction are just cited in the text and are not required for
 any of the tables. Replicates can **comment out** or set ``run_kss'' to "no" at the top of the
 ``master_do_file.do`` to run the replication without this section.
 
